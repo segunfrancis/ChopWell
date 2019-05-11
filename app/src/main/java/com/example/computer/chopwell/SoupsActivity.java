@@ -44,8 +44,8 @@ public class SoupsActivity extends AppCompatActivity {
                     modelList.add(mealModel);
                 }
                 adapter = new MealAdapter(SoupsActivity.this, modelList);
-                adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
