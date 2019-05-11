@@ -19,16 +19,17 @@ import java.util.List;
 
 public class BeveragesActivity extends AppCompatActivity {
 
-   private DatabaseReference myRef;
-   private List<MealModel> modelList;
-   private MealAdapter adapter;
-   private RecyclerView recyclerView;
+    private DatabaseReference myRef;
+    private List<MealModel> modelList;
+    private MealAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beverages);
 
+        modelList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view_beverages);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(BeveragesActivity.this));
@@ -38,9 +39,7 @@ public class BeveragesActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    modelList = new ArrayList<>();
                     MealModel mealModel = snapshot.getValue(MealModel.class);
                     modelList.add(mealModel);
                 }

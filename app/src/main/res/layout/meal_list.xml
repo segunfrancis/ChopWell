@@ -33,7 +33,7 @@
             android:layout_toRightOf="@id/meal_image"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/MainText"
             tools:text="Aliquam eu nunc." />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_toRightOf="@id/meal_image"
             android:ellipsize="end"
             android:maxLines="3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textAppearance="@style/SubText"
             tools:text="Aliquam eu nunc. Nam adipiscing. Mauris sollicitudin fermentum libero. Aenean commodo ligula eget dolor. Aliquam eu nunc. Nam adipiscing" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -29,6 +29,7 @@ public class SoupsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soups);
 
+        modelList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view_soups);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SoupsActivity.this));
@@ -38,9 +39,7 @@ public class SoupsActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    modelList = new ArrayList<>();
                     MealModel mealModel = snapshot.getValue(MealModel.class);
                     modelList.add(mealModel);
                 }

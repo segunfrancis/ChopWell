@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainText" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/colorMainText</item>
+    </style>
+
+    <style name="SubText" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorSubText</item>
+    </style>
 </resources>

@@ -29,6 +29,7 @@ public class SnacksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snacks);
 
+        modelList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view_snacks);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SnacksActivity.this));
@@ -40,7 +41,6 @@ public class SnacksActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    modelList = new ArrayList<>();
                     MealModel mealModel = snapshot.getValue(MealModel.class);
                     modelList.add(mealModel);
                 }

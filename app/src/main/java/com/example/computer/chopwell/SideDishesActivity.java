@@ -29,6 +29,7 @@ public class SideDishesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_dishes);
 
+        modelList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view_side_dishes);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SideDishesActivity.this));
@@ -40,7 +41,6 @@ public class SideDishesActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    modelList = new ArrayList<>();
                     MealModel mealModel = snapshot.getValue(MealModel.class);
                     modelList.add(mealModel);
                 }
