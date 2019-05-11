@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Chop Well</string>
+
+    <string-array name="category">
+        <item>Beverages</item>
+        <item>Breakfast</item>
+        <item>Entrees</item>
+        <item>Meat</item>
+        <item>Puddings</item>
+        <item>Side Dishes</item>
+        <item>Snacks</item>
+        <item>Soups and Stews</item>
+    </string-array>
+</resources>
