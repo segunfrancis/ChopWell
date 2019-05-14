@@ -1,9 +1,12 @@
 package com.example.computer.chopwell;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,6 +26,12 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
+        circularProgressDrawable.setStrokeWidth(35.0f);
+        circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
+        circularProgressDrawable.setCenterRadius(50.0f);
+        circularProgressDrawable.start();
 
         Intent intent = getIntent();
 
@@ -44,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Glide.with(DetailActivity.this)
                 .load(intent.getStringExtra(MealViewHolder.IMAGE_URL))
-                .placeholder(R.drawable.meal_placeholder).into(imageView);
+                .placeholder(circularProgressDrawable).error(R.drawable.error_image).into(imageView);
 
         description.setText(intent.getStringExtra(MealViewHolder.DESCRIPTION));
         preparation.setText(intent.getStringExtra(MealViewHolder.PREPARATION));
@@ -54,6 +63,7 @@ public class DetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String snackBarMessage;
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

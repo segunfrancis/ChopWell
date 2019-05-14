@@ -7,4 +7,16 @@
     <!-- Text Colors -->
     <color name="colorMainText">#636363</color>
     <color name="colorSubText">#7E7E7E</color>
+
+    <!-- Gray -->
+    <color name="gray100">#4B4B4B</color>
+    <color name="gray200">#636363</color>
+    <color name="gray300">#6F6F6F</color>
+    <color name="gray400">#888888</color>
+    <color name="gray500">#999999</color>
+    <color name="gray600">#A7A7A7</color>
+    <color name="gray700">#BDBDBD</color>
+    <color name="gray800">#D3D3D3</color>
+    <color name="gray900">#E6E6E6</color>
+
 </resources>
