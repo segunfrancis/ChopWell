@@ -1,6 +1,7 @@
 package com.example.computer.chopwell.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.computer.chopwell.DetailActivity;
 import com.example.computer.chopwell.R;
 import com.example.computer.chopwell.model.MealModel;
 
@@ -48,10 +50,16 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         return modelList.size();
     }
 
-    public class MealViewHolder extends RecyclerView.ViewHolder {
+    public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mealName, mealDescription;
         public ImageView mealImage;
+
+        public static final String MEAL_NAME = "name";
+        public static final String IMAGE_URL = "URL";
+        public static final String DESCRIPTION = "description";
+        public static final String PREPARATION = "preparation";
+        public static final String RECIPE = "recipe";
 
         public MealViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +67,28 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             mealName = itemView.findViewById(R.id.meal_name);
             mealDescription = itemView.findViewById(R.id.meal_description);
             mealImage = itemView.findViewById(R.id.meal_image);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            String mealName, imageURL, description, preparation, recipe;
+            int position = getLayoutPosition();
+
+            mealName = modelList.get(position).getMealName();
+            imageURL = modelList.get(position).getImageURL();
+            description = modelList.get(position).getDescription();
+            preparation = modelList.get(position).getPreparation();
+            recipe = modelList.get(position).getRecipe();
+
+            Intent intent = new Intent(context.getApplicationContext(), DetailActivity.class);
+            intent.putExtra(MEAL_NAME, mealName);
+            intent.putExtra(IMAGE_URL, imageURL);
+            intent.putExtra(DESCRIPTION, description);
+            intent.putExtra(PREPARATION, preparation);
+            intent.putExtra(RECIPE, recipe);
+            context.startActivity(intent);
         }
     }
 }
