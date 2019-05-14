@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
+        // Offline Persistence
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
