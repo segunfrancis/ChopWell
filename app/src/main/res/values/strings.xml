@@ -11,4 +11,6 @@
         <item>Snacks</item>
         <item>Soups and Stews</item>
     </string-array>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
