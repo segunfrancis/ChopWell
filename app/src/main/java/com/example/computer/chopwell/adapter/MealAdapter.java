@@ -2,7 +2,9 @@ package com.example.computer.chopwell.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +40,19 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     public void onBindViewHolder(@NonNull MealViewHolder mealViewHolder, int position) {
         mealViewHolder.mealName.setText(modelList.get(position).getMealName());
         mealViewHolder.mealDescription.setText(modelList.get(position).getDescription());
+
+        // Creation of the CircularProgressDrawable
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context.getApplicationContext());
+        circularProgressDrawable.setStrokeWidth(15.0f);
+        circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
+        circularProgressDrawable.setCenterRadius(35.0f);
+        circularProgressDrawable.start();
+
         // Use Glide
         Glide.with(context)
                 .load(modelList.get(position).getImageURL())
-                .placeholder(R.drawable.meal_placeholder)
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.error_image)
                 .into(mealViewHolder.mealImage);
     }
 
@@ -73,7 +84,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         @Override
         public void onClick(View v) {
-            String mealName, imageURL, description, preparation, recipe;
+            String mealName, imageURL, description, preparation, recipe, itemId;
             int position = getLayoutPosition();
 
             mealName = modelList.get(position).getMealName();
@@ -81,6 +92,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             description = modelList.get(position).getDescription();
             preparation = modelList.get(position).getPreparation();
             recipe = modelList.get(position).getRecipe();
+            itemId = modelList.get(position).getId();
 
             Intent intent = new Intent(context.getApplicationContext(), DetailActivity.class);
             intent.putExtra(MEAL_NAME, mealName);
@@ -88,6 +100,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             intent.putExtra(DESCRIPTION, description);
             intent.putExtra(PREPARATION, preparation);
             intent.putExtra(RECIPE, recipe);
+            intent.putExtra("id", itemId);
             context.startActivity(intent);
         }
     }
