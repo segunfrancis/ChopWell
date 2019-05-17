@@ -18,7 +18,6 @@ import com.example.computer.chopwell.R;
 import com.example.computer.chopwell.model.MealModel;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private Context context;
@@ -43,9 +42,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         // Creation of the CircularProgressDrawable
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context.getApplicationContext());
-        circularProgressDrawable.setStrokeWidth(15.0f);
+        circularProgressDrawable.setStrokeWidth(10.0f);
         circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
-        circularProgressDrawable.setCenterRadius(35.0f);
+        circularProgressDrawable.setCenterRadius(20.0f);
         circularProgressDrawable.start();
 
         // Use Glide

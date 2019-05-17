@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
-        circularProgressDrawable.setStrokeWidth(25.0f);
+        circularProgressDrawable.setStrokeWidth(20.0f);
         circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
         circularProgressDrawable.setCenterRadius(50.0f);
         circularProgressDrawable.start();
