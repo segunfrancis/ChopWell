@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter.MealViewHolder;
 import com.example.computer.chopwell.model.MealModel;
-import com.google.gson.Gson;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -33,6 +32,9 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        // Offline Persistence
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
         circularProgressDrawable.setStrokeWidth(20.0f);
@@ -82,23 +84,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
 
-/*        SharedPreferences preferences = getSharedPreferences("favorite", Context.MODE_PRIVATE);
-        String jsonString = preferences.getString("fav_key", "N/A");
-
-        // Deserialization
-        Gson gson = new Gson();
-        MealModel mealModel = gson.fromJson(jsonString, MealModel.class);
-        if (mealModel != null) {
-            description.setText(mealModel.getDescription());
-            preparation.setText(mealModel.getPreparation());
-            recipe.setText(mealModel.getRecipe());
-            Glide.with(DetailActivity.this)
-                    .load(mealModel.getImageURL())
-                    .placeholder(circularProgressDrawable)
-                    .error(R.drawable.error_image)
-                    .into(imageView);
-            fabImage.setLevel(1);
-        }*/
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,24 +100,6 @@ public class DetailActivity extends AppCompatActivity {
 
                     editor.putString("itemId", itemId);
                     editor.apply();
-/*
-                    // Adding to Shared Preference
-                    MealModel mealModel = new MealModel();
-                    mealModel.setMealName(intent.getStringExtra(MealViewHolder.MEAL_NAME));
-                    mealModel.setDescription(intent.getStringExtra(MealViewHolder.DESCRIPTION));
-                    mealModel.setPreparation(intent.getStringExtra(MealViewHolder.PREPARATION));
-                    mealModel.setRecipe(intent.getStringExtra(MealViewHolder.RECIPE));
-                    mealModel.setImageURL(intent.getStringExtra(MealViewHolder.IMAGE_URL));
-
-                    SharedPreferences preferences = getSharedPreferences("favorite", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-
-                    // Serialisation
-                    Gson gson = new Gson();
-                    String jsonString = gson.toJson(mealModel, MealModel.class);
-
-                    editor.putString("fav_key", jsonString);
-                    editor.apply();*/
 
                 } else if (fabImage.getLevel() == 1) {
                     fabImage.setLevel(0);
