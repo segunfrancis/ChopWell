@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter.MealViewHolder;
 import com.example.computer.chopwell.model.MealModel;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DetailActivity extends AppCompatActivity {
@@ -25,7 +26,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView description, preparation, recipe;
     private ImageView imageView;
     private FloatingActionButton fab;
-    private String itemId;
+    private String itemId, mealNameString, descriptionString, preparationString, recipeString, imageURLString, userId;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
     @Override
 
@@ -33,8 +36,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        // Offline Persistence
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
         final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
         circularProgressDrawable.setStrokeWidth(20.0f);
@@ -63,17 +66,24 @@ public class DetailActivity extends AppCompatActivity {
 
         final Drawable fabImage = fab.getDrawable();
 
+        // Retrieving data from intent
+        itemId = intent.getStringExtra(MealViewHolder.ID);
+        mealNameString = intent.getStringExtra(MealViewHolder.MEAL_NAME);
+        descriptionString = intent.getStringExtra(MealViewHolder.DESCRIPTION);
+        preparationString = intent.getStringExtra(MealViewHolder.PREPARATION);
+        recipeString = intent.getStringExtra(MealViewHolder.RECIPE);
+        imageURLString = intent.getStringExtra(MealViewHolder.IMAGE_URL);
+        userId = intent.getStringExtra(MealViewHolder.USERID);
+
         Glide.with(DetailActivity.this)
-                .load(intent.getStringExtra(MealViewHolder.IMAGE_URL))
+                .load(imageURLString)
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.error_image)
                 .into(imageView);
 
-        description.setText(intent.getStringExtra(MealViewHolder.DESCRIPTION));
-        preparation.setText(intent.getStringExtra(MealViewHolder.PREPARATION));
-        recipe.setText(intent.getStringExtra(MealViewHolder.RECIPE));
-
-        itemId = intent.getStringExtra("id");
+        description.setText(descriptionString);
+        preparation.setText(preparationString);
+        recipe.setText(recipeString);
 
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
         String preferenceId = preferences.getString("itemId", "N/A");
@@ -97,6 +107,9 @@ public class DetailActivity extends AppCompatActivity {
                     snackBarMessage = "Added to Favorite";
                     Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
+
+
+                    myRef.child("favorites").child(userId).setValue();
 
                     editor.putString("itemId", itemId);
                     editor.apply();

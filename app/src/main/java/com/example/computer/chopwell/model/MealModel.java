@@ -8,6 +8,8 @@ public class MealModel {
     private String description;
     private String preparation;
     private String recipe;
+    private String userId;
+    private String userEmail;
 
     public MealModel() {
     }
@@ -33,6 +35,24 @@ public class MealModel {
         this.description = description;
         this.preparation = preparation;
         this.recipe = recipe;
+    }
+
+    public MealModel(String id, String category, String mealName,
+                     String imageURL, String description,
+                     String preparation, String recipe, String userId) {
+        this.id = id;
+        this.category = category;
+        this.mealName = mealName;
+        this.imageURL = imageURL;
+        this.description = description;
+        this.preparation = preparation;
+        this.recipe = recipe;
+        this.userId = userId;
+    }
+
+    public MealModel(String userId, String userEmail) {
+        this.userId = userId;
+        this.userEmail = userEmail;
     }
 
     public String getId() {
@@ -89,5 +109,21 @@ public class MealModel {
 
     public void setRecipe(String recipe) {
         this.recipe = recipe;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

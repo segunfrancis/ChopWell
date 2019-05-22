@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.computer.chopwell.model.MealModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "value";
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
     private EditText mealName, imageURL, description, preparation, recipe;
     private Spinner category;
     private Button update;
@@ -29,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,23 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     String key = myRef.child("meals").push().getKey();
                     MealModel model = new MealModel(key, categoryString, nameString, imageString,
                             descriptionString, preparationString, recipeString);
-                    if (TextUtils.equals(categoryString, "Beverages")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Breakfast")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Entrees")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Meat")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Puddings")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Side Dishes")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Snacks")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    } else if (TextUtils.equals(categoryString, "Soups and Stews")) {
-                        myRef.child("meals").child(categoryString).child(key).setValue(model);
-                    }
+                    myRef.child("meals").child(key).setValue(model);
                     startActivity(new Intent(MainActivity.this, CategoryActivity.class));
                 }
             }

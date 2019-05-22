@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.computer.chopwell.model.MealModel;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class StartActivity extends AppCompatActivity {
@@ -35,6 +37,8 @@ public class StartActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private static final int RC_SIGN_IN = 9001;
 
 
@@ -52,6 +56,9 @@ public class StartActivity extends AppCompatActivity {
 
         googleSignIn = findViewById(R.id.google_signIn);
         skipSignIn = findViewById(R.id.skip_signIn);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -140,6 +147,10 @@ public class StartActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid();
+                            String userEmail = user.getEmail();
+                            MealModel model = new MealModel(userId, userEmail);
+                            myRef.child("users").child(user.getUid()).setValue(model);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
