@@ -34,7 +34,7 @@ public class PuddingsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PuddingsActivity.this));
 
-        myRef = FirebaseDatabase.getInstance().getReference("meals").child("Puddings");
+        myRef = FirebaseDatabase.getInstance().getReference("meals");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -42,7 +42,9 @@ public class PuddingsActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MealModel mealModel = snapshot.getValue(MealModel.class);
-                    modelList.add(mealModel);
+                    if (mealModel.getCategory().equals("Puddings")) {
+                        modelList.add(mealModel);
+                    }
                 }
                 adapter = new MealAdapter(PuddingsActivity.this, modelList);
                 adapter.notifyDataSetChanged();

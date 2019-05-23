@@ -116,10 +116,10 @@ public class CategoryActivity extends AppCompatActivity {
                 if (s.length() == 0) {
                     s = " ";
                 }
-                Query query = FirebaseDatabase.getInstance().getReference("meals/Entrees")
-                        .orderByChild("mealName")
-                        .startAt(s)
-                        .endAt(s + "\uf8ff");
+                Query query = FirebaseDatabase.getInstance().getReference("meals")
+                        .orderByChild("queryMealName")
+                        .startAt(s.toLowerCase())
+                        .endAt(s.toLowerCase() + "\uf8ff");
                 modelList.clear();
 
                 query.addValueEventListener(new ValueEventListener() {

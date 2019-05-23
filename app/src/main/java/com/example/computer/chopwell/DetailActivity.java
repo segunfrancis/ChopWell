@@ -1,11 +1,10 @@
 package com.example.computer.chopwell;
 
 import android.content.Intent;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CircularProgressDrawable;
@@ -16,10 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.computer.chopwell.model.FavoritesModel;
 import com.example.computer.chopwell.adapter.MealAdapter.MealViewHolder;
-import com.example.computer.chopwell.model.MealModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -40,9 +43,9 @@ public class DetailActivity extends AppCompatActivity {
         myRef = database.getReference();
 
         final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
-        circularProgressDrawable.setStrokeWidth(20.0f);
+        circularProgressDrawable.setStrokeWidth(15.0f);
         circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
-        circularProgressDrawable.setCenterRadius(50.0f);
+        circularProgressDrawable.setCenterRadius(45.0f);
         circularProgressDrawable.start();
 
         final Intent intent = getIntent();
@@ -68,12 +71,12 @@ public class DetailActivity extends AppCompatActivity {
 
         // Retrieving data from intent
         itemId = intent.getStringExtra(MealViewHolder.ID);
+        userId = intent.getStringExtra(MealViewHolder.USERID);
         mealNameString = intent.getStringExtra(MealViewHolder.MEAL_NAME);
         descriptionString = intent.getStringExtra(MealViewHolder.DESCRIPTION);
         preparationString = intent.getStringExtra(MealViewHolder.PREPARATION);
         recipeString = intent.getStringExtra(MealViewHolder.RECIPE);
         imageURLString = intent.getStringExtra(MealViewHolder.IMAGE_URL);
-        userId = intent.getStringExtra(MealViewHolder.USERID);
 
         Glide.with(DetailActivity.this)
                 .load(imageURLString)
@@ -85,21 +88,9 @@ public class DetailActivity extends AppCompatActivity {
         preparation.setText(preparationString);
         recipe.setText(recipeString);
 
-        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
-        String preferenceId = preferences.getString("itemId", "N/A");
-
-        if (preferences != null) {
-            if (itemId.equals(preferenceId)) {
-                fabImage.setLevel(1);
-            }
-        }
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
                 String snackBarMessage;
                 // Drawable fabImage = fab.getDrawable();
                 if (fabImage.getLevel() == 0) {
@@ -108,21 +99,41 @@ public class DetailActivity extends AppCompatActivity {
                     Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
 
-
-                    myRef.child("favorites").child(userId).setValue();
-
-                    editor.putString("itemId", itemId);
-                    editor.apply();
-
+                    // Add favorite to firebase
+                    myRef.child("favorites").child(userId).child(itemId).setValue(itemId);
+                    // TODO: don't forget to revisit here
                 } else if (fabImage.getLevel() == 1) {
                     fabImage.setLevel(0);
                     snackBarMessage = "Removed from Favorite";
                     Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
 
-                    editor.remove("itemId");
+                    // Remove favorite from firebase
+                    myRef.child("favorites").child(userId).child(itemId).removeValue();
                 }
             }
         });
+
+
+        /*final Query query = FirebaseDatabase.getInstance().getReference("meals")
+                .child("favorites").child(userId)
+                .orderByChild(itemId)
+                .startAt(itemId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (itemId.equals(query)) {
+                    fabImage.setLevel(1);
+                } else {
+                    fabImage.setLevel(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
     }
+
 }

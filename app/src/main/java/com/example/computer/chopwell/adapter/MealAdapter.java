@@ -16,6 +16,9 @@ import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.DetailActivity;
 import com.example.computer.chopwell.R;
 import com.example.computer.chopwell.model.MealModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -42,9 +45,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         // Creation of the CircularProgressDrawable
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context.getApplicationContext());
-        circularProgressDrawable.setStrokeWidth(10.0f);
+        circularProgressDrawable.setStrokeWidth(6.0f);
         circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
-        circularProgressDrawable.setCenterRadius(20.0f);
+        circularProgressDrawable.setCenterRadius(50.0f);
         circularProgressDrawable.start();
 
         // Use Glide
@@ -87,6 +90,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         public void onClick(View v) {
             String mealName, imageURL, description, preparation, recipe, itemId, userId;
             int position = getLayoutPosition();
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
             itemId = modelList.get(position).getId();
             mealName = modelList.get(position).getMealName();
@@ -94,7 +98,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             description = modelList.get(position).getDescription();
             preparation = modelList.get(position).getPreparation();
             recipe = modelList.get(position).getRecipe();
-            userId = modelList.get(position).getUserId();
+            userId = mAuth.getUid();
 
             Intent intent = new Intent(context.getApplicationContext(), DetailActivity.class);
             intent.putExtra(ID, itemId);

@@ -10,13 +10,14 @@ public class MealModel {
     private String recipe;
     private String userId;
     private String userEmail;
+    private String queryMealName;
 
     public MealModel() {
     }
 
     public MealModel(String id, String category, String mealName,
                      String imageURL, String description,
-                     String preparation, String recipe) {
+                     String preparation, String recipe, String queryMealName) {
         this.id = id;
         this.category = category;
         this.mealName = mealName;
@@ -24,6 +25,7 @@ public class MealModel {
         this.description = description;
         this.preparation = preparation;
         this.recipe = recipe;
+        this.queryMealName = queryMealName;
     }
 
     public MealModel(String category, String mealName,
@@ -35,19 +37,6 @@ public class MealModel {
         this.description = description;
         this.preparation = preparation;
         this.recipe = recipe;
-    }
-
-    public MealModel(String id, String category, String mealName,
-                     String imageURL, String description,
-                     String preparation, String recipe, String userId) {
-        this.id = id;
-        this.category = category;
-        this.mealName = mealName;
-        this.imageURL = imageURL;
-        this.description = description;
-        this.preparation = preparation;
-        this.recipe = recipe;
-        this.userId = userId;
     }
 
     public MealModel(String userId, String userEmail) {
@@ -125,5 +114,13 @@ public class MealModel {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getQueryMealName() {
+        return queryMealName;
+    }
+
+    public void setQueryMealName(String queryMealName) {
+        this.queryMealName = queryMealName;
     }
 }

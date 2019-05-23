@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     String key = myRef.child("meals").push().getKey();
                     MealModel model = new MealModel(key, categoryString, nameString, imageString,
-                            descriptionString, preparationString, recipeString);
+                            descriptionString, preparationString, recipeString, nameString.toLowerCase());
                     myRef.child("meals").child(key).setValue(model);
                     startActivity(new Intent(MainActivity.this, CategoryActivity.class));
                 }

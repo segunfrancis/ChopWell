@@ -1,4 +1,4 @@
-package com.example.computer.chopwell.adapter;
+package com.example.computer.chopwell.model;
 
 public class FavoritesModel {
     private String favoriteId;

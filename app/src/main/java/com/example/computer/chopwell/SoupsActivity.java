@@ -34,14 +34,16 @@ public class SoupsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SoupsActivity.this));
 
-        myRef = FirebaseDatabase.getInstance().getReference("meals").child("Soups and Stews");
+        myRef = FirebaseDatabase.getInstance().getReference("meals");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MealModel mealModel = snapshot.getValue(MealModel.class);
-                    modelList.add(mealModel);
+                    if (mealModel.getCategory().equals("Soups and Stews")) {
+                        modelList.add(mealModel);
+                    }
                 }
                 adapter = new MealAdapter(SoupsActivity.this, modelList);
                 recyclerView.setAdapter(adapter);

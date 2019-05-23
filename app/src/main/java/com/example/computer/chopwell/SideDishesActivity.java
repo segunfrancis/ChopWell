@@ -34,7 +34,7 @@ public class SideDishesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SideDishesActivity.this));
 
-        myRef = FirebaseDatabase.getInstance().getReference("meals").child("Side Dishes");
+        myRef = FirebaseDatabase.getInstance().getReference("meals");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -42,7 +42,9 @@ public class SideDishesActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MealModel mealModel = snapshot.getValue(MealModel.class);
-                    modelList.add(mealModel);
+                    if (mealModel.getCategory().equals("Side Dishes")) {
+                        modelList.add(mealModel);
+                    }
                 }
                 adapter = new MealAdapter(SideDishesActivity.this, modelList);
                 adapter.notifyDataSetChanged();
