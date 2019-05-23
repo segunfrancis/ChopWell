@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.computer.chopwell.databaseUtil.MyDatabaseUtil;
 import com.example.computer.chopwell.model.MealModel;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -53,6 +54,9 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        // Enabling disk persistence for offline functionality
+        MyDatabaseUtil.getDatabase();
 
         googleSignIn = findViewById(R.id.google_signIn);
         skipSignIn = findViewById(R.id.skip_signIn);
