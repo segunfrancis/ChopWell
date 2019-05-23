@@ -10,9 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.model.FavoritesModel;
@@ -69,6 +71,9 @@ public class DetailActivity extends AppCompatActivity {
 
         final Drawable fabImage = fab.getDrawable();
 
+        // Setting the favorite items of a user
+        setFavorite();
+
         // Retrieving data from intent
         itemId = intent.getStringExtra(MealViewHolder.ID);
         userId = intent.getStringExtra(MealViewHolder.USERID);
@@ -101,7 +106,6 @@ public class DetailActivity extends AppCompatActivity {
 
                     // Add favorite to firebase
                     myRef.child("favorites").child(userId).child(itemId).setValue(itemId);
-                    // TODO: don't forget to revisit here
                 } else if (fabImage.getLevel() == 1) {
                     fabImage.setLevel(0);
                     snackBarMessage = "Removed from Favorite";
@@ -113,27 +117,36 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFavorite();
+    }
 
-        /*final Query query = FirebaseDatabase.getInstance().getReference("meals")
-                .child("favorites").child(userId)
-                .orderByChild(itemId)
-                .startAt(itemId);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (itemId.equals(query)) {
-                    fabImage.setLevel(1);
-                } else {
-                    fabImage.setLevel(0);
-                }
-            }
+    private void setFavorite() {
+        userId = getIntent().getStringExtra(MealViewHolder.USERID);
+        itemId = getIntent().getStringExtra(MealViewHolder.ID);
+        myRef.child("favorites").child(userId).child(itemId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Drawable fabImage = fab.getDrawable();
+                        String mealId = dataSnapshot.getValue(String.class);
+                        // Check if itemId is present in database
+                        if (TextUtils.equals(mealId, itemId)) {
+                            fabImage.setLevel(1);
+                        } else {
+                            fabImage.setLevel(0);
+                        }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(DetailActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }
