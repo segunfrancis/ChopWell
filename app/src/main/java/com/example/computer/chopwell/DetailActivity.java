@@ -36,7 +36,6 @@ public class DetailActivity extends AppCompatActivity {
     private FirebaseDatabase database;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -97,23 +96,27 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String snackBarMessage;
-                // Drawable fabImage = fab.getDrawable();
-                if (fabImage.getLevel() == 0) {
-                    fabImage.setLevel(1);
-                    snackBarMessage = "Added to Favorite";
-                    Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                // Check if user is logged in
+                if (userId != null) {
+                    if (fabImage.getLevel() == 0) {
+                        fabImage.setLevel(1);
+                        snackBarMessage = "Added to Favorite";
+                        Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
 
-                    // Add favorite to firebase
-                    myRef.child("favorites").child(userId).child(itemId).setValue(itemId);
-                } else if (fabImage.getLevel() == 1) {
-                    fabImage.setLevel(0);
-                    snackBarMessage = "Removed from Favorite";
-                    Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                        // Add favorite to firebase
+                        myRef.child("favorites").child(userId).child(itemId).setValue(itemId);
+                    } else if (fabImage.getLevel() == 1) {
+                        fabImage.setLevel(0);
+                        snackBarMessage = "Removed from Favorite";
+                        Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
 
-                    // Remove favorite from firebase
-                    myRef.child("favorites").child(userId).child(itemId).removeValue();
+                        // Remove favorite from firebase
+                        myRef.child("favorites").child(userId).child(itemId).removeValue();
+                    }
+                } else {
+                    Toast.makeText(DetailActivity.this, "You have to be singed in to use this feature", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -128,25 +131,28 @@ public class DetailActivity extends AppCompatActivity {
     private void setFavorite() {
         userId = getIntent().getStringExtra(MealViewHolder.USERID);
         itemId = getIntent().getStringExtra(MealViewHolder.ID);
-        myRef.child("favorites").child(userId).child(itemId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Drawable fabImage = fab.getDrawable();
-                        String mealId = dataSnapshot.getValue(String.class);
-                        // Check if itemId is present in database
-                        if (TextUtils.equals(mealId, itemId)) {
-                            fabImage.setLevel(1);
-                        } else {
-                            fabImage.setLevel(0);
+        // Check if user is logged in
+        if (userId != null) {
+            myRef.child("favorites").child(userId).child(itemId)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Drawable fabImage = fab.getDrawable();
+                            String mealId = dataSnapshot.getValue(String.class);
+                            // Check if itemId is present in database
+                            if (TextUtils.equals(mealId, itemId)) {
+                                fabImage.setLevel(1);
+                            } else {
+                                fabImage.setLevel(0);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(DetailActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(DetailActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
 }

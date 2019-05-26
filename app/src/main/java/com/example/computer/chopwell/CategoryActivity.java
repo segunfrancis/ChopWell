@@ -11,10 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.computer.chopwell.adapter.MealAdapter;
 import com.example.computer.chopwell.model.MealModel;
@@ -51,10 +51,10 @@ public class CategoryActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
+                /*if (firebaseAuth.getCurrentUser() == null) {
                     startActivity(new Intent(CategoryActivity.this, StartActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                }
+                }*/
             }
         };
 
@@ -105,6 +105,7 @@ public class CategoryActivity extends AppCompatActivity {
         // Implement SearchView
         MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        // Implement Search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -163,6 +164,12 @@ public class CategoryActivity extends AppCompatActivity {
                 }
             }).create();
             builder.show();
+        } else if (item.getItemId() == R.id.action_favorites) {
+            if (mAuth.getUid() != null) {
+                startActivity(new Intent(CategoryActivity.this, FavoritesActivity.class));
+            } else {
+                Toast.makeText(CategoryActivity.this, "Sign in to use this feature", Toast.LENGTH_SHORT).show();
+            }
         } else {
             int id = item.getItemId();
         }
