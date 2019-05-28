@@ -2,10 +2,12 @@ package com.example.computer.chopwell;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +16,10 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter;
 import com.example.computer.chopwell.model.MealModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,13 +52,19 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        // Creation of the CircularProgressDrawable
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(CategoryActivity.this);
+        circularProgressDrawable.setStrokeWidth(6.0f);
+        circularProgressDrawable.setColorSchemeColors(Color.WHITE, Color.GREEN, Color.rgb(216, 27, 96));
+        circularProgressDrawable.setCenterRadius(50.0f);
+        circularProgressDrawable.start();
+
+        String entreesURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDLJ_ob1ubUtpmO7UULkq0n2TspS88n4tZTTyDkxyFUBxmZ0ux";
+        String entrees2URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVPswRs0UTmXMfLj9rqluJ9rxYPHhDA55RFyp2XGm1CmPAxYJjw";
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                /*if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(CategoryActivity.this, StartActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                }*/
             }
         };
 

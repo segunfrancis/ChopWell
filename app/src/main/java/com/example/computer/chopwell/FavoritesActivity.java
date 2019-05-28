@@ -3,13 +3,13 @@ package com.example.computer.chopwell;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.computer.chopwell.adapter.MealAdapter;
+import com.example.computer.chopwell.adapter.FavoritesAdapter;
 import com.example.computer.chopwell.model.MealModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +25,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private static final String TAG = FavoritesActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private MealAdapter favoritesAdapter;
+    private FavoritesAdapter favoritesAdapter;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseAuth mAuth;
@@ -42,7 +42,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.favorites_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         final String[] valueId = {null};
         final List<String> temp = new ArrayList<>();
@@ -78,7 +78,7 @@ public class FavoritesActivity extends AppCompatActivity {
                             modelList.add(favModel);
                         }
                     }
-                    favoritesAdapter = new MealAdapter(FavoritesActivity.this, modelList);
+                    favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
                     recyclerView.setAdapter(favoritesAdapter);
                 }
             }
