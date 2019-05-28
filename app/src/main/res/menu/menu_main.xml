@@ -9,12 +9,14 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:orderInCategory="20"
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_action_logout"
         android:title="Logout"
         app:showAsAction="never" />
 
     <item
+        android:orderInCategory="10"
         android:id="@+id/action_favorites"
         android:title="Favorites"
         app:showAsAction="never" />

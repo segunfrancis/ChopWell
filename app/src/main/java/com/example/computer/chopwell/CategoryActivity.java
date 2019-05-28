@@ -161,6 +161,7 @@ public class CategoryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mAuth.signOut();
+                    finish();
                 }
             }).create();
             builder.show();

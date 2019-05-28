@@ -1,5 +1,6 @@
 package com.example.computer.chopwell;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -41,7 +42,7 @@ public class StartActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private static final int RC_SIGN_IN = 9001;
-
+    private ProgressDialog pd;
 
     @Override
     protected void onStart() {
@@ -66,9 +67,16 @@ public class StartActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        // Initiating progress dialog
+        pd = new ProgressDialog(this);
+        pd.setTitle("Signing In");
+        pd.setMessage("Please wait...");
+        pd.setCancelable(false);
+
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd.show();
                 signIn();
             }
         });
@@ -150,6 +158,7 @@ public class StartActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userId = user.getUid();
                             String userEmail = user.getEmail();
@@ -158,6 +167,7 @@ public class StartActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
                         }
                     }
                 });
