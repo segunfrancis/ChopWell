@@ -6,12 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/google_signIn"
+        style="@style/MainText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="8dp" />
+        android:layout_above="@id/skip_signIn"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/sign_in_background"
+        android:drawableStart="@drawable/google_icon"
+        android:drawableLeft="@drawable/google_icon"
+        android:paddingStart="32dp"
+        android:paddingLeft="32dp"
+        android:paddingEnd="32dp"
+        android:paddingRight="32dp"
+        android:text="Sign in with Google"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chopwell_background" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:fontFamily="@font/autour_one"
+        android:text="Chop-Well"
+        android:textColor="@color/white"
+        android:textSize="52sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:fontFamily="@font/autour_one"
+        android:text="Enjoy Nigerian Delicacies the way it's meant to be..."
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/skip_signIn"
@@ -23,5 +69,4 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
         android:text="SKIP" />
-
 </RelativeLayout>

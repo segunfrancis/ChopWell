@@ -16,10 +16,8 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter;
 import com.example.computer.chopwell.model.MealModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -112,9 +110,11 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem logout = menu.findItem(R.id.action_logout);
         // Implement SearchView
         MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setQueryHint("Search meals");
         // Implement Search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -154,6 +154,9 @@ public class CategoryActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (mAuth.getUid() == null) {
+            logout.setEnabled(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

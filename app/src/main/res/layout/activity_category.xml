@@ -31,24 +31,30 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openBeveragesActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_cake_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/chapman"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Beverages"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -63,24 +69,30 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openBreakfastActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_spa_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/breakfast_image"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Breakfast"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -94,25 +106,30 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openEntreesActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/image_entrees"
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_kitchen_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/entree_image"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Entrees"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -126,24 +143,30 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openMeatsActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_cake_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/meat_image"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Meats"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -157,24 +180,31 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openPuddingsActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_spa_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pudding_image"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Puddings"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -188,24 +218,31 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openSideDishesActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_kitchen_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/side_dish"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Side Dishes"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -219,24 +256,31 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openSnacksActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_cake_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/snack_image"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Snacks"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -250,24 +294,31 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="openSoupsActivity"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_spa_black_24dp" />
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_delivery"
+                        app:riv_corner_radius="16dp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        style="@style/SubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
                         android:text="Soups and Stews"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </FrameLayout>
             </android.support.v7.widget.CardView>
         </GridLayout>
     </LinearLayout>
