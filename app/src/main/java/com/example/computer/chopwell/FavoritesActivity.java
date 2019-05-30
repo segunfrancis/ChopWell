@@ -3,7 +3,7 @@ package com.example.computer.chopwell;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,7 +42,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.favorites_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final String[] valueId = {null};
         final List<String> temp = new ArrayList<>();
