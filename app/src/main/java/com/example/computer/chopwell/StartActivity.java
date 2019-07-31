@@ -84,7 +84,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    /* Administrator Check */
+                    if (MyDatabaseUtil.isAdmin()) {
+                        startActivity(new Intent(StartActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(StartActivity.this, CategoryActivity.class));
+                        finish();
+                    }
                 }
             }
         };
@@ -113,7 +120,7 @@ public class StartActivity extends AppCompatActivity {
                         .setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(StartActivity.this, MainActivity.class));
+                                startActivity(new Intent(StartActivity.this, CategoryActivity.class));
                             }
                         }).setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override

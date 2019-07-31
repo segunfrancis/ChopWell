@@ -12,7 +12,7 @@
         android:orderInCategory="20"
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_action_logout"
-        android:title="Logout"
+        android:title="@string/logout"
         app:showAsAction="never" />
 
     <item

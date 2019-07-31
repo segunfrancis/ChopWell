@@ -1,5 +1,7 @@
 package com.example.computer.chopwell.databaseUtil;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MyDatabaseUtil {
@@ -11,5 +13,10 @@ public class MyDatabaseUtil {
             database.setPersistenceEnabled(true);
         }
         return database;
+    }
+
+    public static boolean isAdmin() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return user.getDisplayName().equals("Segun Francis");
     }
 }

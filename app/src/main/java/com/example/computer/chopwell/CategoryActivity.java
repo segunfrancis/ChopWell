@@ -155,29 +155,35 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
         if (mAuth.getUid() == null) {
-            logout.setEnabled(false);
+            logout.setTitle(getString(R.string.sign_in));
+            invalidateOptionsMenu();
         }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryActivity.this);
-            builder.setMessage("Do you want to Logout?")
-                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mAuth.signOut();
-                    finish();
-                }
-            }).create();
-            builder.show();
+            if (item.getTitle().equals(getString(R.string.logout))) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryActivity.this);
+                builder.setMessage("Do you want to Logout?")
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        Toast.makeText(CategoryActivity.this, "You have signed out successfully", Toast.LENGTH_LONG).show();
+                        recreate();
+                    }
+                }).create();
+                builder.show();
+            } else if (item.getTitle().equals(getString(R.string.sign_in))) {
+                startActivity(new Intent(CategoryActivity.this, StartActivity.class));
+            }
         } else if (item.getItemId() == R.id.action_favorites) {
             if (mAuth.getUid() != null) {
                 startActivity(new Intent(CategoryActivity.this, FavoritesActivity.class));
