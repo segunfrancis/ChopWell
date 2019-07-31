@@ -1,12 +1,14 @@
 package com.example.computer.chopwell;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.computer.chopwell.adapter.FavoritesAdapter;
@@ -30,6 +32,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseAuth mAuth;
     private List<MealModel> modelList;
+    private Group emptyGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class FavoritesActivity extends AppCompatActivity {
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
 
+        emptyGroup = findViewById(R.id.empty_group);
+        emptyGroup.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.favorites_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -78,8 +83,14 @@ public class FavoritesActivity extends AppCompatActivity {
                             modelList.add(favModel);
                         }
                     }
+                    if (modelList.size() < 1) {
+                        emptyGroup.setVisibility(View.VISIBLE);
+                    } else {
+                        emptyGroup.setVisibility(View.GONE);
+                    }
                     favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
                     recyclerView.setAdapter(favoritesAdapter);
+                    favoritesAdapter.notifyDataSetChanged();
                 }
             }
 
