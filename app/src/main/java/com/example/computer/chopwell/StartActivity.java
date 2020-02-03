@@ -3,11 +3,14 @@ package com.example.computer.chopwell;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,12 +36,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StartActivity extends AppCompatActivity {
 
-    private Button googleSignIn;
-    private Button skipSignIn;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase database;
     private DatabaseReference myRef;
     private static final int RC_SIGN_IN = 9001;
     private ProgressDialog pd;
@@ -58,10 +58,10 @@ public class StartActivity extends AppCompatActivity {
         // Enabling disk persistence for offline functionality
         MyDatabaseUtil.getDatabase();
 
-        googleSignIn = findViewById(R.id.google_signIn);
-        skipSignIn = findViewById(R.id.skip_signIn);
+        Button googleSignIn = findViewById(R.id.google_signIn);
+        Button skipSignIn = findViewById(R.id.skip_signIn);
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
         mAuth = FirebaseAuth.getInstance();
@@ -151,6 +151,8 @@ public class StartActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Toast.makeText(getApplicationContext(), "Google Sign in Failed", Toast.LENGTH_SHORT).show();
+                Log.d("StartActivity", e.getLocalizedMessage());
+                pd.dismiss();
             }
         }
     }

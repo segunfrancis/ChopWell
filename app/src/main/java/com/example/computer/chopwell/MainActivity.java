@@ -1,7 +1,9 @@
 package com.example.computer.chopwell;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,9 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "value";
-    private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
     private EditText mealName, imageURL, description, preparation, recipe;
     private Spinner category;
     private Button update;
@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
