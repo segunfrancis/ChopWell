@@ -31,9 +31,6 @@ public class FavoritesActivity extends AppCompatActivity {
     private static final String TAG = FavoritesActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private FavoritesAdapter favoritesAdapter;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
     private List<MealModel> modelList;
     private Group emptyGroup;
 
@@ -42,9 +39,9 @@ public class FavoritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         emptyGroup = findViewById(R.id.empty_group);
         emptyGroup.setVisibility(View.GONE);
@@ -55,7 +52,7 @@ public class FavoritesActivity extends AppCompatActivity {
         final String[] valueId = {null};
         final List<String> temp = new ArrayList<>();
 
-        myRef.child("favorites").child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+        myRef.child("favorites").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

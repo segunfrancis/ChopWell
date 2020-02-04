@@ -39,11 +39,11 @@
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_beverages"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/chapman"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -77,11 +77,11 @@
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_breakfast"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/breakfast_image"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -114,11 +114,11 @@
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_entrees"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/entree_image"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -151,11 +151,11 @@
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_meats"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/meat_image"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -189,11 +189,11 @@
                     android:orientation="vertical">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_puddings"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/pudding_image"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -227,11 +227,11 @@
                     android:orientation="vertical">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_sideDishes"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/side_dish"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -265,11 +265,11 @@
                     android:orientation="vertical">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_snacks"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/snack_image"
                         app:riv_corner_radius="16dp" />
 
                     <TextView
@@ -303,11 +303,11 @@
                     android:orientation="vertical">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image_soupsAndStews"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/food_delivery"
                         app:riv_corner_radius="16dp" />
 
                     <TextView

@@ -1,9 +1,11 @@
 package com.example.computer.chopwell;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuItemCompat;
@@ -13,13 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter;
 import com.example.computer.chopwell.model.MealModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +56,15 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        loadImages(this, R.drawable.chapman, findViewById(R.id.image_beverages));
+        loadImages(this, R.drawable.breakfast_image, findViewById(R.id.image_breakfast));
+        loadImages(this, R.drawable.entree_image, findViewById(R.id.image_entrees));
+        loadImages(this, R.drawable.meat_image, findViewById(R.id.image_meats));
+        loadImages(this, R.drawable.pudding_image, findViewById(R.id.image_puddings));
+        loadImages(this, R.drawable.side_dish, findViewById(R.id.image_sideDishes));
+        loadImages(this, R.drawable.snack_image, findViewById(R.id.image_snacks));
+        loadImages(this, R.drawable.food_delivery, findViewById(R.id.image_soupsAndStews));
+
         // Creation of the CircularProgressDrawable
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(CategoryActivity.this);
         circularProgressDrawable.setStrokeWidth(6.0f);
@@ -57,13 +72,7 @@ public class CategoryActivity extends AppCompatActivity {
         circularProgressDrawable.setCenterRadius(50.0f);
         circularProgressDrawable.start();
 
-        String entreesURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDLJ_ob1ubUtpmO7UULkq0n2TspS88n4tZTTyDkxyFUBxmZ0ux";
-        String entrees2URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVPswRs0UTmXMfLj9rqluJ9rxYPHhDA55RFyp2XGm1CmPAxYJjw";
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            }
+        mAuthListener = firebaseAuth -> {
         };
 
         mAuth = FirebaseAuth.getInstance();
@@ -73,6 +82,10 @@ public class CategoryActivity extends AppCompatActivity {
         searchResults.setLayoutManager(new LinearLayoutManager(CategoryActivity.this));
 
         modelList = new ArrayList<>();
+    }
+
+    private void loadImages(Context context, int imageId, ImageView view) {
+        Glide.with(context).load(imageId).into(view);
     }
 
     public void openBeveragesActivity(View view) {
@@ -167,18 +180,10 @@ public class CategoryActivity extends AppCompatActivity {
             if (item.getTitle().equals(getString(R.string.logout))) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryActivity.this);
                 builder.setMessage("Do you want to Logout?")
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
-                        Toast.makeText(CategoryActivity.this, "You have signed out successfully", Toast.LENGTH_LONG).show();
-                        recreate();
-                    }
+                        .setNegativeButton("NO", (dialog, which) -> dialog.dismiss()).setPositiveButton("YES", (dialog, which) -> {
+                    mAuth.signOut();
+                    Toast.makeText(CategoryActivity.this, "You have signed out successfully", Toast.LENGTH_LONG).show();
+                    recreate();
                 }).create();
                 builder.show();
             } else if (item.getTitle().equals(getString(R.string.sign_in))) {
@@ -194,5 +199,18 @@ public class CategoryActivity extends AppCompatActivity {
             int id = item.getItemId();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(CategoryActivity.this)
+                .setMessage("Do you want to exit?")
+                .setPositiveButton("YES", (dialogInterface, i) -> {
+                    System.exit(0);
+                    dialogInterface.dismiss();
+                })
+                .setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.dismiss())
+                .create()
+                .show();
     }
 }

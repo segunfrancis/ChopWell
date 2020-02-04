@@ -25,7 +25,7 @@
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -37,14 +37,16 @@
 
     <include layout="@layout/content_detail" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@android:color/white"
         android:src="@drawable/ic_favorite_level_list"
-        app:borderWidth="4dp" />
+        app:backgroundTint="@android:color/white"
+        app:borderWidth="4dp"
+        app:icon="@drawable/ic_favorite_level_list"
+        app:iconTint="@color/colorPrimaryDark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

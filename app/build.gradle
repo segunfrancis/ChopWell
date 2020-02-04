@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -37,5 +41,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     // Rounded Image
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.0'
+    implementation 'androidx.navigation:navigation-ui:2.2.0'
 }
 apply plugin: 'com.google.gms.google-services'
