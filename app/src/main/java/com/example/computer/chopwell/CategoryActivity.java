@@ -203,7 +203,9 @@ public class CategoryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new MaterialAlertDialogBuilder(CategoryActivity.this)
+        new MaterialAlertDialogBuilder(CategoryActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                .setTitle("Chop Well")
+                .setIcon(R.drawable.ic_launcher_foreground)
                 .setMessage("Do you want to exit?")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     System.exit(0);

@@ -3,9 +3,11 @@ package com.example.computer.chopwell.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +65,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mealName, mealDescription;
-        public ImageView mealImage;
+        TextView mealName, mealDescription;
+        ImageView mealImage;
 
         public static final String ID = "id";
         public static final String MEAL_NAME = "name";
@@ -74,7 +76,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         public static final String RECIPE = "recipe";
         public static final String USERID = "userId";
 
-        public MealViewHolder(@NonNull View itemView) {
+        MealViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mealName = itemView.findViewById(R.id.meal_name);

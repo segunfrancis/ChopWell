@@ -63,18 +63,18 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Meal
 
     public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mealName, mealDescription;
-        public ImageView mealImage;
+        TextView mealName, mealDescription;
+        ImageView mealImage;
 
-        public static final String ID = "id";
-        public static final String MEAL_NAME = "name";
-        public static final String IMAGE_URL = "URL";
-        public static final String DESCRIPTION = "description";
-        public static final String PREPARATION = "preparation";
-        public static final String RECIPE = "recipe";
-        public static final String USERID = "userId";
+        static final String ID = "id";
+        static final String MEAL_NAME = "name";
+        static final String IMAGE_URL = "URL";
+        static final String DESCRIPTION = "description";
+        static final String PREPARATION = "preparation";
+        static final String RECIPE = "recipe";
+        static final String USERID = "userId";
 
-        public MealViewHolder(@NonNull View itemView) {
+        MealViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mealName = itemView.findViewById(R.id.meal_name_fav);
