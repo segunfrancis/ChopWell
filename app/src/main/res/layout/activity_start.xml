@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".StartActivity">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/google_signIn"
-        style="@style/MainText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/skip_signIn"
@@ -16,16 +15,16 @@
         android:layout_marginLeft="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="@drawable/sign_in_background"
-        android:drawableStart="@drawable/google_icon"
-        android:drawableLeft="@drawable/google_icon"
         android:paddingStart="32dp"
         android:paddingLeft="32dp"
         android:paddingEnd="32dp"
         android:paddingRight="32dp"
         android:text="Sign in with Google"
         android:textAllCaps="false"
-        android:textSize="16sp" />
+        android:textAppearance="@style/MainText"
+        android:textSize="16sp"
+        app:backgroundTint="@color/colorPrimary"
+        app:icon="@drawable/ic_icons8_google" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -38,9 +37,10 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+        android:layout_margin="16dp"
         android:fontFamily="@font/autour_one"
-        android:text="Chop-Well"
+        android:text="Chop Well"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="52sp"
         android:textStyle="bold|italic" />
@@ -59,14 +59,14 @@
         android:textSize="18sp"
         android:textStyle="italic" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/skip_signIn"
-        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:text="SKIP" />
+        android:text="SKIP"
+        app:backgroundTint="@android:color/transparent" />
 </RelativeLayout>
