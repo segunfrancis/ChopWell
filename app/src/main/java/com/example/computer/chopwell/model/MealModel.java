@@ -1,6 +1,8 @@
 package com.example.computer.chopwell.model;
 
-public class MealModel {
+import java.io.Serializable;
+
+public class MealModel implements Serializable {
     private String id;
     private String category;
     private String mealName;

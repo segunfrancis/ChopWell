@@ -67,6 +67,7 @@ public class FavoritesActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(FavoritesActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, databaseError.getMessage());
             }
         });
 
@@ -83,6 +84,7 @@ public class FavoritesActivity extends AppCompatActivity {
                             modelList.add(favModel);
                         }
                     }
+                    // Set empty list icon
                     if (modelList.size() < 1) {
                         emptyGroup.setVisibility(View.VISIBLE);
                     } else {

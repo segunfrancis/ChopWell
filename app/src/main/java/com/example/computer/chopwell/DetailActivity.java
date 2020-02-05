@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.example.computer.chopwell.model.MealModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -15,25 +16,26 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.computer.chopwell.adapter.MealAdapter.MealViewHolder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.computer.chopwell.utils.Utility.MEAL_ADAPTER_TO_DETAIL_ACTIVITY;
+
 public class DetailActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton fab;
-    private String itemId;
-    private String mealNameString;
-    private String userId;
     private DatabaseReference myRef;
+    private MealModel mealModel;
+    private final String TAG = DetailActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +47,17 @@ public class DetailActivity extends AppCompatActivity {
 
         final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(DetailActivity.this);
         circularProgressDrawable.setStrokeWidth(15.0f);
-        circularProgressDrawable.setColorSchemeColors(Color.RED, Color.GREEN, Color.rgb(168, 187, 208));
+        circularProgressDrawable.setColorSchemeColors(Color.GREEN, Color.rgb(168, 187, 208));
         circularProgressDrawable.setCenterRadius(45.0f);
         circularProgressDrawable.start();
 
+        // Retrieving data from intent
         final Intent intent = getIntent();
+        mealModel = (MealModel) intent.getSerializableExtra(MEAL_ADAPTER_TO_DETAIL_ACTIVITY);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(intent.getStringExtra(MealViewHolder.MEAL_NAME));
+        getSupportActionBar().setTitle(mealModel.getMealName());
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
@@ -68,48 +72,42 @@ public class DetailActivity extends AppCompatActivity {
         // Setting the favorite items of a user
         setFavorite();
 
-        // Retrieving data from intent
-        itemId = intent.getStringExtra(MealViewHolder.ID);
-        userId = intent.getStringExtra(MealViewHolder.USERID);
-        mealNameString = intent.getStringExtra(MealViewHolder.MEAL_NAME);
-        String descriptionString = intent.getStringExtra(MealViewHolder.DESCRIPTION);
-        String preparationString = intent.getStringExtra(MealViewHolder.PREPARATION);
-        String recipeString = intent.getStringExtra(MealViewHolder.RECIPE);
-        String imageURLString = intent.getStringExtra(MealViewHolder.IMAGE_URL);
-
         Glide.with(DetailActivity.this)
-                .load(imageURLString)
+                .load(mealModel.getImageURL())
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.error_image)
                 .into(imageView);
 
-        description.setText(descriptionString);
-        preparation.setText(preparationString);
-        recipe.setText(recipeString);
+        description.setText(mealModel.getDescription());
+        preparation.setText(mealModel.getPreparation());
+        recipe.setText(mealModel.getRecipe());
 
         fab.setOnClickListener(view -> {
             String snackBarMessage;
             // Check if user is logged in
-            if (userId != null) {
+            if (mealModel.getUserId() != null) {
                 if (fabImage.getLevel() == 0) {
                     fabImage.setLevel(1);
                     snackBarMessage = "Added to Favorite";
                     Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                            .show();
 
                     // Add favorite to firebase
-                    myRef.child("favorites").child(userId).child(itemId).setValue(itemId);
+                    myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId()).setValue(mealModel);
                 } else if (fabImage.getLevel() == 1) {
                     fabImage.setLevel(0);
                     snackBarMessage = "Removed from Favorite";
                     Snackbar.make(view, snackBarMessage, Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                            .show();
 
                     // Remove favorite from firebase
-                    myRef.child("favorites").child(userId).child(itemId).removeValue();
+                    myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId()).removeValue();
                 }
             } else {
-                Toast.makeText(DetailActivity.this, "You have to be singed in to use this feature", Toast.LENGTH_SHORT).show();
+                snackBarMessage = "Sign in to use this feature";
+                Snackbar.make(fab, snackBarMessage, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("SIGN IN", view1 -> navigateToSignInActivity())
+                        .show();
             }
         });
     }
@@ -121,18 +119,16 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setFavorite() {
-        userId = getIntent().getStringExtra(MealViewHolder.USERID);
-        itemId = getIntent().getStringExtra(MealViewHolder.ID);
         // Check if user is logged in
-        if (userId != null) {
-            myRef.child("favorites").child(userId).child(itemId)
+        if (mealModel.getUserId() != null) {
+            myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Drawable fabImage = fab.getIcon();
                             String mealId = dataSnapshot.getValue(String.class);
                             // Check if itemId is present in database
-                            if (TextUtils.equals(mealId, itemId)) {
+                            if (TextUtils.equals(mealId, mealModel.getId())) {
                                 fabImage.setLevel(1);
                             } else {
                                 fabImage.setLevel(0);
@@ -142,8 +138,13 @@ public class DetailActivity extends AppCompatActivity {
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                             Toast.makeText(DetailActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, databaseError.getMessage());
                         }
                     });
         }
+    }
+
+    private void navigateToSignInActivity() {
+        startActivity(new Intent(DetailActivity.this, StartActivity.class));
     }
 }

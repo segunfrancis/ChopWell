@@ -1,7 +1,6 @@
 package com.example.computer.chopwell;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuItemCompat;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.adapter.MealAdapter;
 import com.example.computer.chopwell.model.MealModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -178,14 +176,19 @@ public class CategoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
             if (item.getTitle().equals(getString(R.string.logout))) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryActivity.this);
-                builder.setMessage("Do you want to Logout?")
-                        .setNegativeButton("NO", (dialog, which) -> dialog.dismiss()).setPositiveButton("YES", (dialog, which) -> {
-                    mAuth.signOut();
-                    Toast.makeText(CategoryActivity.this, "You have signed out successfully", Toast.LENGTH_LONG).show();
-                    recreate();
-                }).create();
-                builder.show();
+                new MaterialAlertDialogBuilder(CategoryActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                        .setTitle("Chop Well")
+                        .setIcon(R.drawable.ic_launcher_foreground)
+                        .setMessage("Do you want to Logout?")
+                        .setNegativeButton("NO", (dialog, which) -> dialog.dismiss())
+                        .setPositiveButton("YES", (dialog, which) -> {
+                            mAuth.signOut();
+                            Snackbar.make(findViewById(R.id.root), "You have signed out successfully", Snackbar.LENGTH_INDEFINITE)
+                                    .show();
+                            recreate();
+                        })
+                        .create()
+                        .show();
             } else if (item.getTitle().equals(getString(R.string.sign_in))) {
                 startActivity(new Intent(CategoryActivity.this, StartActivity.class));
             }
@@ -193,7 +196,9 @@ public class CategoryActivity extends AppCompatActivity {
             if (mAuth.getUid() != null) {
                 startActivity(new Intent(CategoryActivity.this, FavoritesActivity.class));
             } else {
-                Toast.makeText(CategoryActivity.this, "Sign in to use this feature", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.root), "Sign in to use this feature", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("SIGN IN", view -> navigateToSignInActivity())
+                        .show();
             }
         } else {
             int id = item.getItemId();
@@ -214,5 +219,9 @@ public class CategoryActivity extends AppCompatActivity {
                 .setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.dismiss())
                 .create()
                 .show();
+    }
+
+    private void navigateToSignInActivity() {
+        startActivity(new Intent(CategoryActivity.this, StartActivity.class));
     }
 }

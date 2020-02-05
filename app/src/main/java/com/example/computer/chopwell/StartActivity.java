@@ -1,17 +1,13 @@
 package com.example.computer.chopwell;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,13 +17,11 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -72,26 +66,20 @@ public class StartActivity extends AppCompatActivity {
         pd.setMessage("Please wait...");
         pd.setCancelable(false);
 
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pd.show();
-                signIn();
-            }
+        googleSignIn.setOnClickListener(v -> {
+            pd.show();
+            signIn();
         });
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    /* Administrator Check */
-                    if (MyDatabaseUtil.isAdmin()) {
-                        startActivity(new Intent(StartActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(StartActivity.this, CategoryActivity.class));
-                        finish();
-                    }
+        mAuthListener = firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null) {
+                /* Administrator Check */
+                if (MyDatabaseUtil.isAdmin()) {
+                    startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(StartActivity.this, CategoryActivity.class));
+                    finish();
                 }
             }
         };
@@ -103,33 +91,17 @@ public class StartActivity extends AppCompatActivity {
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(StartActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                .enableAutoManage(this, connectionResult -> Toast.makeText(StartActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .build();
 
-        skipSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(StartActivity.this);
-                dialog.setMessage("Skipping Sign In will limit the features of this app")
-                        .setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(StartActivity.this, CategoryActivity.class));
-                            }
-                        }).setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
-            }
-        });
+        skipSignIn.setOnClickListener(v ->
+                new MaterialAlertDialogBuilder(StartActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                        .setTitle("Chop Well")
+                        .setIcon(R.drawable.ic_launcher_foreground)
+                        .setMessage("Skipping Sign In will limit the features of this app")
+                        .setNegativeButton("SKIP", (dialog1, which) -> navigateToCategoryActivity())
+                        .setPositiveButton("CANCEL", (dialog12, which) -> dialog12.dismiss()).show());
     }
 
     public void signIn() {
@@ -160,24 +132,25 @@ public class StartActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String userId = user.getUid();
-                            String userEmail = user.getEmail();
-                            MealModel model = new MealModel(userId, userEmail);
-                            myRef.child("users").child(user.getUid()).setValue(model);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String userId = user.getUid();
+                        String userEmail = user.getEmail();
+                        MealModel model = new MealModel(userId, userEmail);
+                        myRef.child("users").child(user.getUid()).setValue(model);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
                     }
                 });
+    }
+
+    private void navigateToCategoryActivity() {
+        startActivity(new Intent(StartActivity.this, CategoryActivity.class));
     }
 }

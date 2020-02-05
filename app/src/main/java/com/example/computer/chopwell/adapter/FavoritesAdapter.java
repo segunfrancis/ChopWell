@@ -16,9 +16,10 @@ import com.bumptech.glide.Glide;
 import com.example.computer.chopwell.DetailActivity;
 import com.example.computer.chopwell.R;
 import com.example.computer.chopwell.model.MealModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
+
+import static com.example.computer.chopwell.utils.Utility.MEAL_ADAPTER_TO_DETAIL_ACTIVITY;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MealViewHolder> {
     private Context context;
@@ -48,7 +49,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Meal
         circularProgressDrawable.setCenterRadius(50.0f);
         circularProgressDrawable.start();
 
-        // Use Glide
+        // Using Glide to load images
         Glide.with(context)
                 .load(modelList.get(position).getImageURL())
                 .placeholder(circularProgressDrawable)
@@ -66,14 +67,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Meal
         TextView mealName, mealDescription;
         ImageView mealImage;
 
-        static final String ID = "id";
-        static final String MEAL_NAME = "name";
-        static final String IMAGE_URL = "URL";
-        static final String DESCRIPTION = "description";
-        static final String PREPARATION = "preparation";
-        static final String RECIPE = "recipe";
-        static final String USERID = "userId";
-
         MealViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -86,26 +79,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Meal
 
         @Override
         public void onClick(View v) {
-            String mealName, imageURL, description, preparation, recipe, itemId, userId;
             int position = getLayoutPosition();
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-            itemId = modelList.get(position).getId();
-            mealName = modelList.get(position).getMealName();
-            imageURL = modelList.get(position).getImageURL();
-            description = modelList.get(position).getDescription();
-            preparation = modelList.get(position).getPreparation();
-            recipe = modelList.get(position).getRecipe();
-            userId = mAuth.getUid();
 
             Intent intent = new Intent(context.getApplicationContext(), DetailActivity.class);
-            intent.putExtra(ID, itemId);
-            intent.putExtra(MEAL_NAME, mealName);
-            intent.putExtra(IMAGE_URL, imageURL);
-            intent.putExtra(DESCRIPTION, description);
-            intent.putExtra(PREPARATION, preparation);
-            intent.putExtra(RECIPE, recipe);
-            intent.putExtra(USERID, userId);
+            intent.putExtra(MEAL_ADAPTER_TO_DETAIL_ACTIVITY, modelList.get(position));
             context.startActivity(intent);
         }
     }

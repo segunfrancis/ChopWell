@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
+import static com.example.computer.chopwell.utils.Utility.MEAL_ADAPTER_TO_DETAIL_ACTIVITY;
+
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private Context context;
     private List<MealModel> modelList;
@@ -68,14 +70,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         TextView mealName, mealDescription;
         ImageView mealImage;
 
-        public static final String ID = "id";
-        public static final String MEAL_NAME = "name";
-        public static final String IMAGE_URL = "URL";
-        public static final String DESCRIPTION = "description";
-        public static final String PREPARATION = "preparation";
-        public static final String RECIPE = "recipe";
-        public static final String USERID = "userId";
-
         MealViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -88,26 +82,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         @Override
         public void onClick(View v) {
-            String mealName, imageURL, description, preparation, recipe, itemId, userId;
             int position = getLayoutPosition();
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-            itemId = modelList.get(position).getId();
-            mealName = modelList.get(position).getMealName();
-            imageURL = modelList.get(position).getImageURL();
-            description = modelList.get(position).getDescription();
-            preparation = modelList.get(position).getPreparation();
-            recipe = modelList.get(position).getRecipe();
-            userId = mAuth.getUid();
+            MealModel mealModel = modelList.get(position);
+            mealModel.setUserId(FirebaseAuth.getInstance().getUid());
 
             Intent intent = new Intent(context.getApplicationContext(), DetailActivity.class);
-            intent.putExtra(ID, itemId);
-            intent.putExtra(MEAL_NAME, mealName);
-            intent.putExtra(IMAGE_URL, imageURL);
-            intent.putExtra(DESCRIPTION, description);
-            intent.putExtra(PREPARATION, preparation);
-            intent.putExtra(RECIPE, recipe);
-            intent.putExtra(USERID, userId);
+            intent.putExtra(MEAL_ADAPTER_TO_DETAIL_ACTIVITY, mealModel);
             context.startActivity(intent);
         }
     }
