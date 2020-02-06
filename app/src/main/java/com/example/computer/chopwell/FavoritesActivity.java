@@ -10,10 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.computer.chopwell.adapter.FavoritesAdapter;
 import com.example.computer.chopwell.model.MealModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,15 +35,16 @@ public class FavoritesActivity extends AppCompatActivity {
     private FavoritesAdapter favoritesAdapter;
     private List<MealModel> modelList;
     private Group emptyGroup;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        myRef = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         emptyGroup = findViewById(R.id.empty_group);
         emptyGroup.setVisibility(View.GONE);
@@ -49,7 +54,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         modelList = new ArrayList<>();
 
-        myRef.child("favorites").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+        myRef.child("favorites").child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 modelList.clear();
@@ -81,5 +86,47 @@ public class FavoritesActivity extends AppCompatActivity {
         }
         favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
         recyclerView.setAdapter(favoritesAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_favorites, menu);
+        if (modelList.size() < 1) {
+            menu.findItem(R.id.clear_favorites).setEnabled(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.clear_favorites) {
+            displayDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void clearFavorites() {
+        myRef.child("favorites").child(mAuth.getUid()).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Snackbar.make(findViewById(R.id.root_favorite), "Your favorite list has been cleared", Snackbar.LENGTH_LONG).show();
+            } else {
+                Log.d(TAG, "Database Error: " + task.getException().getLocalizedMessage());
+            }
+        });
+    }
+
+    private void displayDialog() {
+        new MaterialAlertDialogBuilder(FavoritesActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                .setTitle("Chop Well")
+                .setIcon(R.drawable.ic_launcher_foreground)
+                .setMessage("Do you want to Clear favorite list?")
+                .setPositiveButton("YES", (dialog, which) -> {
+                    clearFavorites();
+                    dialog.dismiss();
+                    recreate();
+                })
+                .setNegativeButton("NO", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 }
