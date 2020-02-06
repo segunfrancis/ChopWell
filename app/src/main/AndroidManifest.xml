@@ -3,7 +3,7 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.computer.chopwell">
 
-    <dist:module dist:instant="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".MealListActivity"
+            android:parentActivityName=".CategoryActivity" />
         <activity
             android:name=".FavoritesActivity"
             android:label="Favorites"
@@ -32,38 +35,6 @@
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SoupsActivity"
-            android:label="Soups and Stews"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".SnacksActivity"
-            android:label="Snacks"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".SideDishesActivity"
-            android:label="Side Dishes"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".PuddingsActivity"
-            android:label="Puddings"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".MeatActivity"
-            android:label="Meats"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".EntreesActivity"
-            android:label="Entrees"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".BreakfastActivity"
-            android:label="Breakfast"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
-            android:name=".BeveragesActivity"
-            android:label="Beverages"
-            android:parentActivityName=".CategoryActivity" />
-        <activity
             android:name=".MainActivity"
             android:label="MainActivity" />
         <activity
@@ -75,5 +46,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
+    <dist:module dist:instant="true" />
 
 </manifest>

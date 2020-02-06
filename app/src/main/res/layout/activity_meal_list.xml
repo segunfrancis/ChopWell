@@ -4,10 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BreakfastActivity">
+    tools:context=".MealListActivity">
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_breakfast"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/meal_list"/>
+        android:id="@+id/meal_list_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:listitem="@layout/meal_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

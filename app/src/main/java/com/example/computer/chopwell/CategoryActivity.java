@@ -34,7 +34,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity {
+import static com.example.computer.chopwell.utils.Utility.BEVERAGE_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.BREAKFAST_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.CATEGORY_INTENT_KEY;
+import static com.example.computer.chopwell.utils.Utility.ENTREES_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.MEAT_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.PUDDINGS_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.SIDE_DISHES_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.SNACKS_CATEGORY_NAME;
+import static com.example.computer.chopwell.utils.Utility.SOUPS_CATEGORY_NAME;
+
+public class CategoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<MealModel> modelList;
     private MealAdapter searchAdapter;
@@ -63,6 +73,16 @@ public class CategoryActivity extends AppCompatActivity {
         loadImages(this, R.drawable.snack_image, findViewById(R.id.image_snacks));
         loadImages(this, R.drawable.food_delivery, findViewById(R.id.image_soupsAndStews));
 
+        // Click Listeners
+        findViewById(R.id.beverages_card).setOnClickListener(this);
+        findViewById(R.id.breakfast_card).setOnClickListener(this);
+        findViewById(R.id.entrees_card).setOnClickListener(this);
+        findViewById(R.id.meats_card).setOnClickListener(this);
+        findViewById(R.id.soups_card).setOnClickListener(this);
+        findViewById(R.id.puddings_card).setOnClickListener(this);
+        findViewById(R.id.side_dishes_card).setOnClickListener(this);
+        findViewById(R.id.snacks_card).setOnClickListener(this);
+
         // Creation of the CircularProgressDrawable
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(CategoryActivity.this);
         circularProgressDrawable.setStrokeWidth(6.0f);
@@ -86,36 +106,8 @@ public class CategoryActivity extends AppCompatActivity {
         Glide.with(context).load(imageId).into(view);
     }
 
-    public void openBeveragesActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, BeveragesActivity.class));
-    }
-
-    public void openBreakfastActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, BreakfastActivity.class));
-    }
-
-    public void openEntreesActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, EntreesActivity.class));
-    }
-
-    public void openMeatsActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, MeatActivity.class));
-    }
-
-    public void openPuddingsActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, PuddingsActivity.class));
-    }
-
-    public void openSideDishesActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, SideDishesActivity.class));
-    }
-
-    public void openSnacksActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, SnacksActivity.class));
-    }
-
-    public void openSoupsActivity(View view) {
-        startActivity(new Intent(CategoryActivity.this, SoupsActivity.class));
+    public void openMealListActivity(String category) {
+        startActivity(new Intent(CategoryActivity.this, MealListActivity.class).putExtra(CATEGORY_INTENT_KEY, category));
     }
 
     @Override
@@ -223,5 +215,43 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void navigateToSignInActivity() {
         startActivity(new Intent(CategoryActivity.this, StartActivity.class));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.breakfast_card: {
+                openMealListActivity(BREAKFAST_CATEGORY_NAME);
+                break;
+            }
+            case R.id.beverages_card: {
+                openMealListActivity(BEVERAGE_CATEGORY_NAME);
+                break;
+            }
+            case R.id.entrees_card: {
+                openMealListActivity(ENTREES_CATEGORY_NAME);
+                break;
+            }
+            case R.id.puddings_card: {
+                openMealListActivity(PUDDINGS_CATEGORY_NAME);
+                break;
+            }
+            case R.id.snacks_card: {
+                openMealListActivity(SNACKS_CATEGORY_NAME);
+                break;
+            }
+            case R.id.soups_card: {
+                openMealListActivity(SOUPS_CATEGORY_NAME);
+                break;
+            }
+            case R.id.side_dishes_card: {
+                openMealListActivity(SIDE_DISHES_CATEGORY_NAME);
+                break;
+            }
+            case R.id.meats_card: {
+                openMealListActivity(MEAT_CATEGORY_NAME);
+                break;
+            }
+        }
     }
 }

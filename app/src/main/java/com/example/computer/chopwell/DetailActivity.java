@@ -26,9 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.example.computer.chopwell.utils.Utility.MEAL_ADAPTER_TO_DETAIL_ACTIVITY;
 
 public class DetailActivity extends AppCompatActivity {
@@ -139,23 +136,6 @@ public class DetailActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    private void updateFavoritesList() {
-        List<MealModel> modelList = new ArrayList<>();
-        myRef.child("favorites").child(mealModel.getUserId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = snapshot.getValue(MealModel.class);
-                    modelList.add(mealModel);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
 
     private void navigateToSignInActivity() {
