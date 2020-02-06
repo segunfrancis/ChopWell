@@ -41,7 +41,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     // Rounded Image
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    // Navigation Components
     implementation 'androidx.navigation:navigation-fragment:2.2.0'
     implementation 'androidx.navigation:navigation-ui:2.2.0'
+    // ViewModel and LiveData
+    implementation 'android.arch.lifecycle:livedata:1.1.1'
+    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 }
 apply plugin: 'com.google.gms.google-services'

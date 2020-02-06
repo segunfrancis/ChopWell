@@ -9,10 +9,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.computer.chopwell.adapter.FavoritesAdapter;
 import com.example.computer.chopwell.model.MealModel;
@@ -49,57 +47,39 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final String[] valueId = {null};
-        final List<String> temp = new ArrayList<>();
+        modelList = new ArrayList<>();
 
         myRef.child("favorites").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                modelList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    valueId[0] = snapshot.getValue(String.class);
-                    for (String value : valueId) {
-                        temp.add(value);
-                        Log.i(TAG, value);
-                    }
+                    MealModel mealModel = snapshot.getValue(MealModel.class);
+                    modelList.add(mealModel);
                 }
+                // Set empty list icon
+                if (modelList.size() < 1) {
+                    emptyGroup.setVisibility(View.VISIBLE);
+                } else {
+                    emptyGroup.setVisibility(View.GONE);
+                }
+                favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
+                recyclerView.setAdapter(favoritesAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(FavoritesActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, databaseError.getMessage());
             }
         });
 
-        modelList = new ArrayList<>();
-
-        myRef.child("meals").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String mealId = snapshot.getKey();
-                    for (String favId : temp) {
-                        if (TextUtils.equals(mealId, favId)) {
-                            MealModel favModel = snapshot.getValue(MealModel.class);
-                            modelList.add(favModel);
-                        }
-                    }
-                    // Set empty list icon
-                    if (modelList.size() < 1) {
-                        emptyGroup.setVisibility(View.VISIBLE);
-                    } else {
-                        emptyGroup.setVisibility(View.GONE);
-                    }
-                    favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
-                    recyclerView.setAdapter(favoritesAdapter);
-                    favoritesAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.i(TAG, databaseError.getMessage());
-            }
-        });
+        // Set empty list icon
+        if (modelList.size() < 1) {
+            emptyGroup.setVisibility(View.VISIBLE);
+        } else {
+            emptyGroup.setVisibility(View.GONE);
+        }
+        favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
+        recyclerView.setAdapter(favoritesAdapter);
     }
 }

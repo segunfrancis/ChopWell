@@ -15,11 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +25,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.computer.chopwell.utils.Utility.MEAL_ADAPTER_TO_DETAIL_ACTIVITY;
 
@@ -41,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -94,6 +96,7 @@ public class DetailActivity extends AppCompatActivity {
 
                     // Add favorite to firebase
                     myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId()).setValue(mealModel);
+                    // updateFavoritesList();
                 } else if (fabImage.getLevel() == 1) {
                     fabImage.setLevel(0);
                     snackBarMessage = "Removed from Favorite";
@@ -102,6 +105,7 @@ public class DetailActivity extends AppCompatActivity {
 
                     // Remove favorite from firebase
                     myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId()).removeValue();
+                    // updateFavoritesList();
                 }
             } else {
                 snackBarMessage = "Sign in to use this feature";
@@ -112,36 +116,46 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setFavorite();
-    }
-
     private void setFavorite() {
         // Check if user is logged in
         if (mealModel.getUserId() != null) {
-            myRef.child("favorites").child(mealModel.getUserId()).child(mealModel.getId())
+            myRef.child("favorites").child(mealModel.getUserId())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Drawable fabImage = fab.getIcon();
-                            String mealId = dataSnapshot.getValue(String.class);
-                            // Check if itemId is present in database
-                            if (TextUtils.equals(mealId, mealModel.getId())) {
+
+                            if (dataSnapshot.hasChild(mealModel.getId())) {
                                 fabImage.setLevel(1);
                             } else {
                                 fabImage.setLevel(0);
                             }
+                            Log.d(TAG, "child present: " + dataSnapshot.hasChild(mealModel.getId()));
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(DetailActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, databaseError.getMessage());
                         }
                     });
         }
+    }
+
+    private void updateFavoritesList() {
+        List<MealModel> modelList = new ArrayList<>();
+        myRef.child("favorites").child(mealModel.getUserId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MealModel mealModel = snapshot.getValue(MealModel.class);
+                    modelList.add(mealModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void navigateToSignInActivity() {
