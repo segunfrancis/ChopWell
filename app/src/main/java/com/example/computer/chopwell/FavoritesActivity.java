@@ -68,6 +68,7 @@ public class FavoritesActivity extends AppCompatActivity {
                 } else {
                     emptyGroup.setVisibility(View.GONE);
                 }
+                invalidateOptionsMenu();
                 favoritesAdapter = new FavoritesAdapter(FavoritesActivity.this, modelList);
                 recyclerView.setAdapter(favoritesAdapter);
             }
@@ -93,6 +94,8 @@ public class FavoritesActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_favorites, menu);
         if (modelList.size() < 1) {
             menu.findItem(R.id.clear_favorites).setEnabled(false);
+        } else {
+            menu.findItem(R.id.clear_favorites).setEnabled(true);
         }
         return true;
     }
@@ -123,7 +126,7 @@ public class FavoritesActivity extends AppCompatActivity {
                 .setPositiveButton("YES", (dialog, which) -> {
                     clearFavorites();
                     dialog.dismiss();
-                    recreate();
+                    invalidateOptionsMenu();
                 })
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss())
                 .create()
