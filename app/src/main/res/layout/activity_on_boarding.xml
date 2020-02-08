@@ -14,7 +14,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/autour_one"
-        android:text="Chop Well"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="52sp"
@@ -50,24 +50,60 @@
                 style="@style/SubText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:text="PREV"
+                android:text="@string/prev_onboarding_text"
                 android:textAppearance="@style/SubText"
                 android:textColor="@color/colorMainText"
                 android:textSize="12sp" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_next"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:text="NEXT"
+                android:text="@string/next_onboarding_text"
                 android:textAppearance="@style/SubText"
                 android:textColor="@color/colorMainText"
                 android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/indicator1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:contentDescription="@string/indicator_image_description"
+                    android:src="@drawable/indicator" />
+
+                <ImageView
+                    android:id="@+id/indicator2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:contentDescription="@string/indicator_image_description"
+                    android:src="@drawable/indicator" />
+
+                <ImageView
+                    android:id="@+id/indicator3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:contentDescription="@string/indicator_image_description"
+                    android:src="@drawable/indicator" />
+            </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
