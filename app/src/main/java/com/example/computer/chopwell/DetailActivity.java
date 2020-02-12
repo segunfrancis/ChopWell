@@ -106,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             } else {
                 snackBarMessage = "Sign in to use this feature";
-                Snackbar.make(fab, snackBarMessage, Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(fab, snackBarMessage, Snackbar.LENGTH_LONG)
                         .setAction("SIGN IN", view1 -> navigateToSignInActivity())
                         .show();
             }

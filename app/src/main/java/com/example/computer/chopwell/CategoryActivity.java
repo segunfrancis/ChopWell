@@ -188,7 +188,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
             if (mAuth.getUid() != null) {
                 startActivity(new Intent(CategoryActivity.this, FavoritesActivity.class));
             } else {
-                Snackbar.make(findViewById(R.id.root), "Sign in to use this feature", Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(findViewById(R.id.root), "Sign in to use this feature", Snackbar.LENGTH_LONG)
                         .setAction("SIGN IN", view -> navigateToSignInActivity())
                         .show();
             }
