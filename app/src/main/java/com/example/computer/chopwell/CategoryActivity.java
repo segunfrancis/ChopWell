@@ -50,13 +50,13 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private MealAdapter searchAdapter;
     private RecyclerView searchResults;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    //private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        mAuth.addAuthStateListener(mAuthListener);
+        //mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         circularProgressDrawable.setCenterRadius(50.0f);
         circularProgressDrawable.start();
 
-        mAuthListener = firebaseAuth -> {
-        };
+        /*mAuthListener = firebaseAuth -> {
+        };*/
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -170,7 +170,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
             if (item.getTitle().equals(getString(R.string.logout))) {
                 new MaterialAlertDialogBuilder(CategoryActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
                         .setTitle("Chop Well")
-                        .setIcon(R.drawable.ic_launcher_foreground)
+                        .setIcon(R.drawable.ic_app_icon)
                         .setMessage("Do you want to Logout?")
                         .setNegativeButton("NO", (dialog, which) -> dialog.dismiss())
                         .setPositiveButton("YES", (dialog, which) -> {
@@ -202,7 +202,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         new MaterialAlertDialogBuilder(CategoryActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
                 .setTitle("Chop Well")
-                .setIcon(R.drawable.ic_launcher_foreground)
+                .setIcon(R.drawable.ic_app_icon)
                 .setMessage("Do you want to exit?")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     System.exit(0);

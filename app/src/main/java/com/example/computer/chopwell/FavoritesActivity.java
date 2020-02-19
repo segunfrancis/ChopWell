@@ -121,7 +121,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private void displayDialog() {
         new MaterialAlertDialogBuilder(FavoritesActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
                 .setTitle("Chop Well")
-                .setIcon(R.drawable.ic_launcher_foreground)
+                .setIcon(R.drawable.ic_app_icon)
                 .setMessage("Do you want to Clear favorite list?")
                 .setPositiveButton("YES", (dialog, which) -> {
                     clearFavorites();

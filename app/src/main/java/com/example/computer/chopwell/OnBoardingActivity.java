@@ -2,9 +2,12 @@ package com.example.computer.chopwell;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 
 import com.example.computer.chopwell.adapter.OnBoardingPagerAdapter;
 import com.example.computer.chopwell.model.OnBoardingModel;
+import com.example.computer.chopwell.viewmodel.OnBoardingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +26,33 @@ public class OnBoardingActivity extends AppCompatActivity {
     private ImageView mIndicator1;
     private ImageView mIndicator2;
     private ImageView mIndicator3;
+    private OnBoardingViewModel mViewModel;
+    private SharedPreferences.Editor mEditor;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
 
+        // Instantiate ViewModel
+        mPreferences = getSharedPreferences("onBoarding_screen_preference", Context.MODE_PRIVATE);
+        mViewModel = ViewModelProviders.of(OnBoardingActivity.this).get(OnBoardingViewModel.class);
+        mViewModel.seenOnBoardingScreen(mPreferences.getBoolean("onBoarding_preference_boolean_key", false));
+        mViewModel.mUserStatesMutableLiveData.observe(this, userStates -> {
+            switch (userStates) {
+                case SEEN_ON_BOARDING_SCREEN:
+                    navigateToStartActivity();
+                    break;
+                case NOT_SEEN_ON_BOARDING_SCREEN:
+                    // Show onBoarding Screen
+                    setUpViewPager();
+                    break;
+            }
+        });
+    }
+
+    private void setUpViewPager() {
         ViewPager2 onBoardingViewPager = findViewById(R.id.onBoarding_viewPager);
         AppCompatButton prevButton = findViewById(R.id.button_prev);
         AppCompatButton nextButton = findViewById(R.id.button_next);
@@ -53,7 +78,11 @@ public class OnBoardingActivity extends AppCompatActivity {
             if (onBoardingViewPager.getCurrentItem() < 2)
                 onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem() + 1, true);
             else {
-                startActivity(new Intent(OnBoardingActivity.this, StartActivity.class));
+                mViewModel.seenOnBoardingScreen(true);
+                mEditor = mPreferences.edit();
+                mEditor.putBoolean("onBoarding_preference_boolean_key", true);
+                mEditor.apply();
+                navigateToStartActivity();
                 finish();
             }
         });
@@ -102,5 +131,10 @@ public class OnBoardingActivity extends AppCompatActivity {
         mIndicator1.setSelected(first);
         mIndicator2.setSelected(second);
         mIndicator3.setSelected(third);
+    }
+
+    private void navigateToStartActivity() {
+        startActivity(new Intent(OnBoardingActivity.this, StartActivity.class));
+        finish();
     }
 }

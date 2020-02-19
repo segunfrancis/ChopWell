@@ -98,7 +98,7 @@ public class StartActivity extends AppCompatActivity {
         skipSignIn.setOnClickListener(v ->
                 new MaterialAlertDialogBuilder(StartActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
                         .setTitle("Chop Well")
-                        .setIcon(R.drawable.ic_launcher_foreground)
+                        .setIcon(R.drawable.ic_app_icon)
                         .setMessage("Skipping Sign In will limit the features of this app")
                         .setNegativeButton("SKIP", (dialog1, which) -> navigateToCategoryActivity())
                         .setPositiveButton("CANCEL", (dialog12, which) -> dialog12.dismiss()).show());
