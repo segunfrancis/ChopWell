@@ -26,4 +26,4 @@ Use the android studio _Build Variants_ button to choose between **production** 
 </ul>
 
 ## APK file
-You can download the APK file for this project [here]()
+You can download the APK file for this project [here](http://bit.ly/chop-well)
