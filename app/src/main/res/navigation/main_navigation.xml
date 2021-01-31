@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/authenticationFragment">
+
+    <fragment
+        android:id="@+id/addMealFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.add_meals.AddMealFragment"
+        android:label="add_meal_fragment"
+        tools:layout="@layout/add_meal_fragment" />
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.auth.AuthenticationFragment"
+        android:label="authentication_fragment"
+        tools:layout="@layout/authentication_fragment" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.categories.CategoryFragment"
+        android:label="category_fragment"
+        tools:layout="@layout/category_fragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.details.DetailsFragment"
+        android:label="details_fragment"
+        tools:layout="@layout/details_fragment" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.favorites.FavoriteFragment"
+        android:label="favorite_fragment"
+        tools:layout="@layout/favorite_fragment" />
+    <fragment
+        android:id="@+id/mealListFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.meal_list.MealListFragment"
+        android:label="meal_list_fragment"
+        tools:layout="@layout/meal_list_fragment" />
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.project.segunfrancis.chopwell.presentation.ui.onboarding.OnBoardingFragment"
+        android:label="on_boarding_fragment"
+        tools:layout="@layout/on_boarding_fragment" />
+</navigation>

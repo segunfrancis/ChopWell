@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId 'com.example.computer.chopwell'
+        applicationId 'com.project.segunfrancis.chopwell'
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
@@ -47,14 +48,16 @@ dependencies {
 
     /* Firebase Dependencies */
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-auth:20.0.2'
     implementation 'com.google.firebase:firebase-database:19.6.0'
-    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-core:18.0.1'
     // Rounded Image
     implementation 'com.makeramen:roundedimageview:2.3.0'
     // Navigation Components
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    api 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    api 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    api "androidx.navigation:navigation-dynamic-features-fragment:2.3.3"
+
     // ViewModel and LiveData
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
