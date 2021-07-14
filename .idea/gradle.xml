@@ -7,10 +7,17 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="Android Studio java home" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/actions" />
+            <option value="$PROJECT_DIR$/library/firebase" />
+            <option value="$PROJECT_DIR$/library/sharedpref" />
+            <option value="$PROJECT_DIR$/usecase" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

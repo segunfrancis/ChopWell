@@ -93,11 +93,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_favorites, menu);
-        if (modelList.size() < 1) {
-            menu.findItem(R.id.clear_favorites).setEnabled(false);
-        } else {
-            menu.findItem(R.id.clear_favorites).setEnabled(true);
-        }
+        menu.findItem(R.id.clear_favorites).setEnabled(modelList.size() >= 1);
         return true;
     }
 

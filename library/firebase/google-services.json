@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64480394556:android:48a38e59caa26a7d",
+        "mobilesdk_app_id": "1:64480394556:android:75ddfdd9d8e86b51",
         "android_client_info": {
-          "package_name": "com.example.computer.chopwell"
+          "package_name": "com.example.computer.firestorecrudsearch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "64480394556-rnupes8p77e9cgnrc54p91it0fjt6r63.apps.googleusercontent.com",
+          "client_id": "64480394556-0hcpehaenosv8i9en09n7uidbqp5jc5j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.computer.chopwell",
+            "package_name": "com.example.computer.firestorecrudsearch",
             "certificate_hash": "8ac05557f6fa7db84dc9199285ae58fc0edaaa42"
           }
         },
@@ -45,18 +45,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64480394556:android:75ddfdd9d8e86b51",
+        "mobilesdk_app_id": "1:64480394556:android:a5dfe65bc19e9ccc957239",
         "android_client_info": {
-          "package_name": "com.example.computer.firestorecrudsearch"
+          "package_name": "com.project.segunfrancis.firebase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "64480394556-0hcpehaenosv8i9en09n7uidbqp5jc5j.apps.googleusercontent.com",
+          "client_id": "64480394556-8qcisrd7tfb5t0e4tm5kmsj3na27a3fj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.computer.firestorecrudsearch",
-            "certificate_hash": "8ac05557f6fa7db84dc9199285ae58fc0edaaa42"
+            "package_name": "com.project.segunfrancis.firebase",
+            "certificate_hash": "aea63e7f5dd107b80651de5af0c1a0ec19c65e10"
           }
         },
         {

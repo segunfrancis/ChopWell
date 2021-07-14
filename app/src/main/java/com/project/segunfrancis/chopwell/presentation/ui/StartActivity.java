@@ -77,11 +77,10 @@ public class StartActivity extends AppCompatActivity {
                 /* Administrator Check */
                 if (MyDatabaseUtil.isAdmin()) {
                     startActivity(new Intent(StartActivity.this, MainActivity.class));
-                    finish();
                 } else {
                     startActivity(new Intent(StartActivity.this, CategoryActivity.class));
-                    finish();
                 }
+                finish();
             }
         };
 
