@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.project.segunfrancis.chopwell.R;
 import com.project.segunfrancis.chopwell.adapter.OnBoardingPagerAdapter;
 import com.project.segunfrancis.chopwell.entity.OnBoardingEntity;
+import com.project.segunfrancis.chopwell.presentation.ui.auth.StartActivity;
 import com.project.segunfrancis.chopwell.viewmodel.OnBoardingViewModel;
 
 import java.util.ArrayList;

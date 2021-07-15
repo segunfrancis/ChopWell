@@ -38,7 +38,8 @@ public class StartActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private ProgressDialog pd;
 
-    @Override
+  /*
+  @Override
     protected void onStart() {
         super.onStart();
 
@@ -74,7 +75,6 @@ public class StartActivity extends AppCompatActivity {
 
         mAuthListener = firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() != null) {
-                /* Administrator Check */
                 if (MyDatabaseUtil.isAdmin()) {
                     startActivity(new Intent(StartActivity.this, MainActivity.class));
                 } else {
@@ -153,4 +153,5 @@ public class StartActivity extends AppCompatActivity {
     private void navigateToCategoryActivity() {
         startActivity(new Intent(StartActivity.this, CategoryActivity.class));
     }
+    */
 }

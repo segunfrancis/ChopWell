@@ -1,5 +1,6 @@
 package com.project.segunfrancis.firebase.repository
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.project.segunfrancis.domain.model.MealDomain
 import com.project.segunfrancis.domain.repository.FirebaseRepository
@@ -14,7 +15,7 @@ import kotlinx.coroutines.coroutineScope
 class FirebaseRepositoryImpl(
     private val database: FirebaseDatabase,
     private val dispatcher: CoroutineDispatcher,
-    private val userId: String
+    private val auth: FirebaseAuth
 ) : FirebaseRepository {
     override suspend fun addFavoriteAsync(meal: MealDomain): Deferred<Boolean> = coroutineScope {
         async(dispatcher) {
@@ -32,7 +33,7 @@ class FirebaseRepositoryImpl(
 
     override suspend fun getAllFavoritesAsync() : Deferred<List<MealDomain?>?> = coroutineScope {
         async(dispatcher) {
-            database.reference.child(FAVORITES).child(userId)
+            database.reference.child(FAVORITES).child(auth.uid.toString())
                 .get().result?.children?.map { snapshot ->
                 snapshot.getValue(MealEntity::class.java)?.toDomain()
             }

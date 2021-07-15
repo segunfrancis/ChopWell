@@ -8,20 +8,28 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.project.segunfrancis.chopwell.entity.MealEntity
+import com.google.firebase.database.FirebaseDatabase
 import com.project.segunfrancis.firebase.R
+import com.project.segunfrancis.firebase.model.MealEntity
 import com.project.segunfrancis.firebase.utils.SignInResult
+import timber.log.Timber
 
-class AuthManager(private val context: Context) {
+class AuthManager(
+    private val context: Context,
+    private val database: FirebaseDatabase,
+    private val auth: FirebaseAuth
+) {
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
-    private val firebaseAuth = Database.initAuth()
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     fun beginSignInRequest() {
         oneTapClient = Identity.getSignInClient(context)
@@ -62,15 +70,21 @@ class AuthManager(private val context: Context) {
                 else -> SignInResult.Error("Something went wrong")
             }
         } catch (t: Throwable) {
+            Timber.e(t)
             SignInResult.Error(t.localizedMessage)
         }
     }
 
-    fun googleSignIn(): Intent {
+    fun initGoogleSignIn() {
+        Timber.d("googleSignIn initiated")
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        val googleSignInClient = GoogleSignIn.getClient(context, gso)
+        googleSignInClient = GoogleSignIn.getClient(context, gso)
+    }
+
+    fun googleSignIn(): Intent {
         return googleSignInClient.signInIntent
     }
 
@@ -79,33 +93,38 @@ class AuthManager(private val context: Context) {
         return GoogleSignIn.getLastSignedInAccount(context) != null
     }
 
-    fun googleSignInResult(intent: Intent?) {
+    fun googleSignInResult(intent: Intent?, success: (Boolean) -> Unit) {
         val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
         try {
             val account = task.getResult(ApiException::class.java)
-            account?.let { firebaseAuthWithGoogle(it) }
+            Timber.d("Account: ${account?.email}")
+            account?.let { firebaseAuthWithGoogle(it) { outcome -> success(outcome) } }
         } catch (t: Throwable) {
             t.printStackTrace()
+            Timber.e(t)
         }
     }
 
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount, success: (Boolean) -> Unit) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
+        auth.signInWithCredential(credential)
             .addOnCompleteListener { task: Task<AuthResult?> ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    val user: FirebaseUser? = firebaseAuth.currentUser
+                    val user: FirebaseUser? = auth.currentUser
                     val userId = user?.uid
                     val userEmail = user?.email
                     val model =
-                        MealEntity(userId, userEmail)
-                    user?.let { Database.init().reference.child("users").child(it.uid).setValue(model) }
+                        userId?.let { MealEntity(it, userEmail) }
+                    user?.let {
+                        database.reference.child("users").child(it.uid).setValue(model)
+                    }
+                    success(true)
                 } else {
                     // If sign in fails, display a message to the user.
-
+                    success(false)
+                    Timber.e(task.exception)
                 }
             }
     }
 }
-

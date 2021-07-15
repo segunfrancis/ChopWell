@@ -13,5 +13,6 @@ object FirebaseConstants {
     const val CATEGORY_INTENT_KEY: String = "Category"
     const val MEALS: String = "meals"
     const val FAVORITES: String = "favorites"
+    const val CLIENT_ID: String = "64480394556-re3deeooibv4nrnsiqnh088gjddsq4oa.apps.googleusercontent.com"
 }
 

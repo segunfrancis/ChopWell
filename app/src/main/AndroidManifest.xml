@@ -35,7 +35,7 @@
             android:label="Favorites"
             android:parentActivityName="com.project.segunfrancis.chopwell.presentation.ui.CategoryActivity" />
         <activity
-            android:name="com.project.segunfrancis.chopwell.presentation.ui.StartActivity"
+            android:name="com.project.segunfrancis.chopwell.presentation.ui.auth.StartActivity"
             android:theme="@style/FullScreen" />
         <activity
             android:name="com.project.segunfrancis.chopwell.presentation.ui.DetailActivity"
