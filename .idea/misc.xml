@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_category.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/category_fragment.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.24375" />
+      </map>
+    </option>
+  </component>
   <component name="Kotlin2JsCompilerArguments">
     <option name="sourceMapEmbedSources" />
     <option name="sourceMapPrefix" />

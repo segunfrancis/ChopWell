@@ -19,6 +19,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:columnCount="2">
 
             <com.google.android.material.card.MaterialCardView
@@ -51,7 +52,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Beverages"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -86,7 +86,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Breakfast"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -120,7 +119,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Entrees"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -154,7 +152,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Meats"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -189,7 +186,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Puddings"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -224,7 +220,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Side Dishes"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -259,7 +254,6 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Snacks"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -294,10 +288,17 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="8dp"
                         android:text="Soups and Stews"
-                        android:textAlignment="center"
                         android:textColor="@color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
         </GridLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation" />
     </LinearLayout>
 </ScrollView>

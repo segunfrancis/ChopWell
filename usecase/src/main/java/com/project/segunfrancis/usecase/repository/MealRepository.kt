@@ -19,10 +19,4 @@ interface MealRepository {
     fun addMeal(meal: MealUC)
 
     fun getAllMeals(category: String)
-
-    fun signIn()
-
-    fun signOut()
-
-    fun enablePersistence()
 }

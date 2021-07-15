@@ -1,4 +1,4 @@
-package com.project.segunfrancis.firebase
+package com.project.segunfrancis.firebase.repository
 
 import com.google.firebase.database.FirebaseDatabase
 import com.project.segunfrancis.domain.model.MealDomain
@@ -48,19 +48,6 @@ class FirebaseRepositoryImpl(
     }
 
     override fun getAllMeals(category: String) {
-        TODO("Not yet implemented")
-    }
-
-
-    override fun signIn() {
-        TODO("Not yet implemented")
-    }
-
-    override fun signOut() {
-        TODO("Not yet implemented")
-    }
-
-    override fun enablePersistence() {
         TODO("Not yet implemented")
     }
 }

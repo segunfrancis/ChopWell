@@ -31,16 +31,4 @@ class MealRepositoryImpl(private val firebaseRepository: FirebaseRepository) : M
     override fun getAllMeals(category: String) {
         TODO("Not yet implemented")
     }
-
-    override fun signIn() {
-        TODO("Not yet implemented")
-    }
-
-    override fun signOut() {
-        TODO("Not yet implemented")
-    }
-
-    override fun enablePersistence() {
-        TODO("Not yet implemented")
-    }
 }

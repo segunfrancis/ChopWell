@@ -15,10 +15,4 @@ interface FirebaseRepository {
     fun addMeal(meal: MealDomain)
 
     fun getAllMeals(category: String)
-
-    fun signIn()
-
-    fun signOut()
-
-    fun enablePersistence()
 }

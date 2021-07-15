@@ -16,7 +16,7 @@ object Database {
 
     private var firebaseAuth: FirebaseAuth? = null
 
-    private fun initAuth(): FirebaseAuth {
+    fun initAuth(): FirebaseAuth {
         if (firebaseAuth == null) {
             firebaseAuth = FirebaseAuth.getInstance()
         }

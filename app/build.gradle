@@ -25,6 +25,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(":usecase")
+    implementation project(":domain")
+    implementation project(":library:firebase")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:1.6.0"
     implementation 'androidx.appcompat:appcompat:1.3.0'
@@ -36,7 +39,6 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:3.1.2"
-    implementation "io.insert-koin:koin-android-viewmodel:3.1.2"
 
     // Firebase Dependencies
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
@@ -58,6 +60,9 @@ dependencies {
 
     // MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:4.7.1"
 
     // Test
     testImplementation 'junit:junit:4.13.2'
