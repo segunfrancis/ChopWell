@@ -9,6 +9,7 @@ import com.project.segunfrancis.firebase.di.firebaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import timber.log.Timber
 
 class ChopWellApp : Application() {
@@ -17,7 +18,7 @@ class ChopWellApp : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         startKoin {
-            androidLogger()
+            androidLogger(Level.DEBUG)
             androidContext(this@ChopWellApp)
             modules(dispatcherModule, firebaseModule, authModule, repositoryModule, favoriteModule)
         }

@@ -2,7 +2,6 @@ package com.project.segunfrancis.chopwell.presentation.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.project.segunfrancis.chopwell.databinding.ActivityStartBinding
 import com.project.segunfrancis.chopwell.presentation.ui.CategoryActivity
@@ -20,36 +19,24 @@ class StartActivity : AppCompatActivity() {
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        authManager.initGoogleSignIn()
         if (authManager.isUserSignedIn()) {
             // Navigate to next screen
             navigateToCategoryActivity()
         }
 
-        binding.googleSignIn.setOnClickListener { signIn() }
-    }
-
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
-            Timber.d("ActivityResult data: ${result.data?.data}")
-            authManager.googleSignInResult(result.data) { success ->
-                if (success) {
-                    // Navigate to next screen
-                    navigateToCategoryActivity()
-                } else {
-                    // handle error
-                    Timber.d("Unable to sign in")
-                }
-            }
-
-        Timber.d("ResultCode: ${result.data}")
+        binding.googleSignIn.setOnClickListener {
+            signIn()
+        }
     }
 
     private fun signIn() {
         Timber.d("Sign in clicked")
-        val signInIntent = authManager.googleSignIn()
-        Timber.d("SignIn intent uri: $signInIntent")
-        resultLauncher.launch(signInIntent)
+        authManager.anonymousSignIn { response ->
+            Timber.d("User email: ${response?.email}")
+            Timber.d("User ID: ${response?.uid}")
+            Timber.d("User isAnonymous: ${response?.isAnonymous}")
+            Timber.d("User metadata: ${response?.metadata?.creationTimestamp}")
+        }
     }
 
     private fun navigateToCategoryActivity() {
