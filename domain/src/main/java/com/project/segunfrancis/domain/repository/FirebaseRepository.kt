@@ -14,5 +14,5 @@ interface FirebaseRepository {
 
     fun addMeal(meal: MealDomain)
 
-    fun getAllMeals(category: String)
+    suspend fun getAllMealsAsync(category: String) : Deferred<List<MealDomain?>?>
 }

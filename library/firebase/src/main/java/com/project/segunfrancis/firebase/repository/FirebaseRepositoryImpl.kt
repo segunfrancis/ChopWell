@@ -6,11 +6,13 @@ import com.project.segunfrancis.domain.model.MealDomain
 import com.project.segunfrancis.domain.repository.FirebaseRepository
 import com.project.segunfrancis.firebase.model.MealEntity
 import com.project.segunfrancis.firebase.utils.FirebaseConstants.FAVORITES
+import com.project.segunfrancis.firebase.utils.FirebaseConstants.MEALS
 import com.project.segunfrancis.firebase.utils.toDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.tasks.await
 
 class FirebaseRepositoryImpl(
     private val database: FirebaseDatabase,
@@ -31,12 +33,12 @@ class FirebaseRepositoryImpl(
         }
     }
 
-    override suspend fun getAllFavoritesAsync() : Deferred<List<MealDomain?>?> = coroutineScope {
+    override suspend fun getAllFavoritesAsync(): Deferred<List<MealDomain?>?> = coroutineScope {
         async(dispatcher) {
             database.reference.child(FAVORITES).child(auth.uid.toString())
                 .get().result?.children?.map { snapshot ->
-                snapshot.getValue(MealEntity::class.java)?.toDomain()
-            }
+                    snapshot.getValue(MealEntity::class.java)?.toDomain()
+                }
         }
     }
 
@@ -48,7 +50,14 @@ class FirebaseRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getAllMeals(category: String) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllMealsAsync(category: String): Deferred<List<MealDomain?>?> =
+        coroutineScope {
+            async(dispatcher) {
+                database.reference.child(MEALS).get().await().children.filter {
+                    it.getValue(MealEntity::class.java)?.category == category
+                }.map { snapshot ->
+                    snapshot.getValue(MealEntity::class.java)?.toDomain()
+                }
+            }
+        }
 }

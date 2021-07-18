@@ -28,7 +28,7 @@ class MealRepositoryImpl(private val firebaseRepository: FirebaseRepository) : M
         TODO("Not yet implemented")
     }
 
-    override fun getAllMeals(category: String) {
-        TODO("Not yet implemented")
+    override fun getAllMeals(category: String): Flow<List<MealUC?>?> {
+        return flow { emit(firebaseRepository.getAllMealsAsync(category).await()?.map { it?.toUseCase() }) }
     }
 }

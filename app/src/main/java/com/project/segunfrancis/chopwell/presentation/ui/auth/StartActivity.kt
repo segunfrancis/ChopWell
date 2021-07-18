@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.project.segunfrancis.chopwell.R
 import com.project.segunfrancis.chopwell.databinding.ActivityStartBinding
-import com.project.segunfrancis.chopwell.presentation.ui.CategoryActivity
+import com.project.segunfrancis.chopwell.presentation.ui.categories.CategoryActivity
 import com.project.segunfrancis.chopwell.presentation.ui.util.ProgressDialogMax
 import com.project.segunfrancis.firebase.data.AuthManager
 import com.project.segunfrancis.firebase.utils.SignUpResult
