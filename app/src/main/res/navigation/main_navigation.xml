@@ -19,7 +19,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.project.segunfrancis.chopwell.presentation.ui.categories.CategoryFragment"
         android:label="category_fragment"
-        tools:layout="@layout/category_fragment" />
+        tools:layout="@layout/category_fragment" >
+        <action
+            android:id="@+id/action_categoryFragment_to_mealListFragment"
+            app:destination="@id/mealListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.project.segunfrancis.chopwell.presentation.ui.details.DetailsFragment"
@@ -34,7 +38,11 @@
         android:id="@+id/mealListFragment"
         android:name="com.project.segunfrancis.chopwell.presentation.ui.meal_list.MealListFragment"
         android:label="meal_list_fragment"
-        tools:layout="@layout/meal_list_fragment" />
+        tools:layout="@layout/meal_list_fragment" >
+        <argument
+            android:name="category_name"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.project.segunfrancis.chopwell.presentation.ui.onboarding.OnBoardingFragment"

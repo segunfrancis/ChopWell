@@ -16,7 +16,6 @@
             android:layout_width="100dp"
             android:layout_height="120dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             tools:src="@drawable/meal_placeholder" />
@@ -31,7 +30,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_toEndOf="@id/meal_image"
-            android:layout_toRightOf="@id/meal_image"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/MainText"
@@ -49,7 +47,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/meal_image"
-            android:layout_toRightOf="@id/meal_image"
             android:ellipsize="end"
             android:maxLines="3"
             android:textAppearance="@style/SubText"

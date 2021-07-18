@@ -1,6 +1,7 @@
 package com.project.segunfrancis.chopwell.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class MealEntity implements Serializable {
     private String id;
@@ -124,5 +125,18 @@ public class MealEntity implements Serializable {
 
     public void setQueryMealName(String queryMealName) {
         this.queryMealName = queryMealName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MealEntity that = (MealEntity) o;
+        return id.equals(that.id) && category.equals(that.category) && mealName.equals(that.mealName) && imageURL.equals(that.imageURL) && description.equals(that.description) && preparation.equals(that.preparation) && recipe.equals(that.recipe) && userId.equals(that.userId) && userEmail.equals(that.userEmail) && queryMealName.equals(that.queryMealName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category, mealName, imageURL, description, preparation, recipe, userId, userEmail, queryMealName);
     }
 }

@@ -1,9 +1,9 @@
 package com.project.segunfrancis.firebase.data
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.project.segunfrancis.firebase.model.User
+import com.project.segunfrancis.firebase.utils.SignUpResult
 import timber.log.Timber
 
 class AuthManager(
@@ -14,7 +14,8 @@ class AuthManager(
         return auth.currentUser != null
     }
 
-    fun anonymousSignIn(response: (FirebaseUser?) -> Unit) {
+    fun anonymousSignIn(response: (SignUpResult<String>) -> Unit) {
+        response(SignUpResult.Loading)
         auth.signInAnonymously().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val user = task.result?.user
@@ -23,10 +24,10 @@ class AuthManager(
                     database.reference.child("users").child(it.uid)
                         .setValue(model)
                 }
-                response(user)
+                response(SignUpResult.Success(user?.uid))
             } else {
                 Timber.e(task.exception)
-                response(null)
+                response(SignUpResult.Error(task.exception))
             }
         }
     }

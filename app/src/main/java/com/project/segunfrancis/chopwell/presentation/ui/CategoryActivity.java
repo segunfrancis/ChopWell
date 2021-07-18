@@ -45,7 +45,7 @@ import static com.project.segunfrancis.chopwell.presentation.utils.Utility.SIDE_
 import static com.project.segunfrancis.chopwell.presentation.utils.Utility.SNACKS_CATEGORY_NAME;
 import static com.project.segunfrancis.chopwell.presentation.utils.Utility.SOUPS_CATEGORY_NAME;
 
-public class CategoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class CategoryActivity extends AppCompatActivity {
 
     private List<MealEntity> modelList;
     private MealAdapter searchAdapter;
@@ -73,16 +73,6 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         loadImages(this, R.drawable.side_dish, findViewById(R.id.image_sideDishes));
         loadImages(this, R.drawable.snack_image, findViewById(R.id.image_snacks));
         loadImages(this, R.drawable.food_delivery, findViewById(R.id.image_soupsAndStews));
-
-        // Click Listeners
-        findViewById(R.id.beverages_card).setOnClickListener(this);
-        findViewById(R.id.breakfast_card).setOnClickListener(this);
-        findViewById(R.id.entrees_card).setOnClickListener(this);
-        findViewById(R.id.meats_card).setOnClickListener(this);
-        findViewById(R.id.soups_card).setOnClickListener(this);
-        findViewById(R.id.puddings_card).setOnClickListener(this);
-        findViewById(R.id.side_dishes_card).setOnClickListener(this);
-        findViewById(R.id.snacks_card).setOnClickListener(this);
 
         // Creation of the CircularProgressDrawable
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(CategoryActivity.this);
@@ -218,7 +208,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         startActivity(new Intent(CategoryActivity.this, StartActivity.class));
     }
 
-    @Override
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.breakfast_card: {
