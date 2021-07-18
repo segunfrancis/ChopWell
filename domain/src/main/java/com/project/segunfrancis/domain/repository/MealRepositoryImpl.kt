@@ -17,7 +17,10 @@ class MealRepositoryImpl(private val firebaseRepository: FirebaseRepository) : M
     }
 
     override fun getAllFavorites(): Flow<List<MealUC?>?> {
-        return flow { emit(firebaseRepository.getAllFavoritesAsync().await()?.map { it?.toUseCase() }) }
+        return flow {
+            emit(
+                firebaseRepository.getAllFavoritesAsync().await()?.map { it?.toUseCase() })
+        }
     }
 
     override fun clearAllFavorites() {
@@ -29,6 +32,18 @@ class MealRepositoryImpl(private val firebaseRepository: FirebaseRepository) : M
     }
 
     override fun getAllMeals(category: String): Flow<List<MealUC?>?> {
-        return flow { emit(firebaseRepository.getAllMealsAsync(category).await()?.map { it?.toUseCase() }) }
+        return flow {
+            emit(
+                firebaseRepository.getAllMealsAsync(category).await()?.map { it?.toUseCase() }
+            )
+        }
+    }
+
+    override fun searchMeals(query: String): Flow<List<MealUC?>?> {
+        return flow {
+            emit(
+                firebaseRepository.searchMealAsync(query).await()?.map { it?.toUseCase() }
+            )
+        }
     }
 }

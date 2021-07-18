@@ -5,6 +5,7 @@ import com.project.segunfrancis.chopwell.di.dispatcherModule
 import com.project.segunfrancis.chopwell.di.repositoryModule
 import com.project.segunfrancis.chopwell.presentation.ui.favorites.favoriteModule
 import com.project.segunfrancis.chopwell.presentation.ui.meal_list.mealListModule
+import com.project.segunfrancis.chopwell.presentation.ui.search.searchModule
 import com.project.segunfrancis.firebase.di.authModule
 import com.project.segunfrancis.firebase.di.firebaseModule
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +22,15 @@ class ChopWellApp : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@ChopWellApp)
-            modules(dispatcherModule, firebaseModule, authModule, repositoryModule, favoriteModule, mealListModule)
+            modules(
+                dispatcherModule,
+                firebaseModule,
+                authModule,
+                repositoryModule,
+                favoriteModule,
+                mealListModule,
+                searchModule
+            )
         }
     }
 }

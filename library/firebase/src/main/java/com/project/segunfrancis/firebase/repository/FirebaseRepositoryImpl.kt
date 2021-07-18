@@ -60,4 +60,14 @@ class FirebaseRepositoryImpl(
                 }
             }
         }
+
+    override suspend fun searchMealAsync(query: String): Deferred<List<MealDomain?>?> = coroutineScope {
+        async(dispatcher) {
+            database.reference.child(MEALS).get().await().children.filter {
+                it.getValue(MealEntity::class.java)?.queryMealName!!.contains(query, ignoreCase = true)
+            }.map { snapshot ->
+                snapshot.getValue(MealEntity::class.java)?.toDomain()
+            }
+        }
+    }
 }

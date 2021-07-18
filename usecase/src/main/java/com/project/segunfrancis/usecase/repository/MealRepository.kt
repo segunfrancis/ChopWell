@@ -19,4 +19,6 @@ interface MealRepository {
     fun addMeal(meal: MealUC)
 
     fun getAllMeals(category: String): Flow<List<MealUC?>?>
+
+    fun searchMeals(query: String): Flow<List<MealUC?>?>
 }
