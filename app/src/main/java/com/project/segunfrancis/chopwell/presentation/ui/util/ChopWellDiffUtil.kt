@@ -9,6 +9,6 @@ class ChopWellDiffUtil : DiffUtil.ItemCallback<MealEntity>() {
     }
 
     override fun areContentsTheSame(oldItem: MealEntity, newItem: MealEntity): Boolean {
-        return oldItem == newItem
+        return oldItem.equals(newItem)
     }
 }

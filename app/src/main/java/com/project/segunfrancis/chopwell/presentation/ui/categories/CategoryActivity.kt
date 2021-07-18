@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.navigation.NavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,11 +23,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.project.segunfrancis.chopwell.R
 import com.project.segunfrancis.chopwell.adapter.MealAdapter
+import com.project.segunfrancis.chopwell.databinding.ActivityCategoryBinding
 import com.project.segunfrancis.chopwell.entity.MealEntity
 import com.project.segunfrancis.chopwell.presentation.ui.FavoritesActivity
-import com.project.segunfrancis.chopwell.presentation.ui.MealListActivity
 import com.project.segunfrancis.chopwell.presentation.ui.StartActivity
-import com.project.segunfrancis.chopwell.presentation.utils.Utility
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -36,10 +35,12 @@ class CategoryActivity : AppCompatActivity() {
     private var searchAdapter: MealAdapter? = null
     private var searchResults: RecyclerView? = null
     private var mAuth: FirebaseAuth? = null
-    private val navController: NavController by lazy { NavController(this) }
+    private val navController: NavController by lazy { findNavController(R.id.fragmentContainerView) }
+    private lateinit var binding: ActivityCategoryBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Creation of the CircularProgressDrawable
         val circularProgressDrawable = CircularProgressDrawable(this@CategoryActivity)
@@ -52,18 +53,14 @@ class CategoryActivity : AppCompatActivity() {
         circularProgressDrawable.centerRadius = 50.0f
         circularProgressDrawable.start()
         mAuth = FirebaseAuth.getInstance()
-        //searchResults = findViewById(R.id.search_recycler_view)
-        //searchResults!!.setHasFixedSize(true)
-        //searchResults!!.layoutManager = LinearLayoutManager(this@CategoryActivity)
         modelList = ArrayList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        val logout = menu.findItem(R.id.action_logout)
         // Implement SearchView
         val item = menu.findItem(R.id.action_search)
-        val searchView = MenuItemCompat.getActionView(item) as SearchView
+        /*val searchView = MenuItemCompat.getActionView(item) as SearchView
         searchView.queryHint = "Search meals"
         // Implement Search
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -100,45 +97,15 @@ class CategoryActivity : AppCompatActivity() {
                 })
                 return false
             }
-        })
+        })*/
         if (mAuth!!.uid == null) {
-            logout.title = getString(R.string.sign_in)
             invalidateOptionsMenu()
         }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_logout) {
-            if (item.title == getString(R.string.logout)) {
-                MaterialAlertDialogBuilder(
-                    this@CategoryActivity,
-                    R.style.ThemeOverlay_MaterialComponents_Dialog_Alert
-                )
-                    .setTitle("Chop Well")
-                    .setIcon(R.drawable.ic_app_icon)
-                    .setMessage("Do you want to Logout?")
-                    .setNegativeButton(
-                        "NO"
-                    ) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
-                    .setPositiveButton(
-                        "YES"
-                    ) { dialog: DialogInterface?, which: Int ->
-                        mAuth!!.signOut()
-                        Snackbar.make(
-                            findViewById(R.id.root),
-                            "You have signed out successfully",
-                            Snackbar.LENGTH_INDEFINITE
-                        )
-                            .show()
-                        recreate()
-                    }
-                    .create()
-                    .show()
-            } else if (item.title == getString(R.string.sign_in)) {
-                startActivity(Intent(this@CategoryActivity, StartActivity::class.java))
-            }
-        } else if (item.itemId == R.id.action_favorites) {
+         if (item.itemId == R.id.action_favorites) {
             if (mAuth!!.uid != null) {
                 startActivity(Intent(this@CategoryActivity, FavoritesActivity::class.java))
             } else {
@@ -150,8 +117,8 @@ class CategoryActivity : AppCompatActivity() {
                     .setAction("SIGN IN") { view: View? -> navigateToSignInActivity() }
                     .show()
             }
-        } else {
-            val id = item.itemId
+        } else if (item.itemId == R.id.action_search) {
+             navController.navigate(R.id.searchFragment)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -76,7 +76,6 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem logout = menu.findItem(R.id.action_logout);
         // Implement SearchView
         MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
@@ -121,7 +120,6 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
         if (mAuth.getUid() == null) {
-            logout.setTitle(getString(R.string.sign_in));
             invalidateOptionsMenu();
         }
         return super.onCreateOptionsMenu(menu);
@@ -129,25 +127,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == R.id.action_logout) {
-            if (item.getTitle().equals(getString(R.string.logout))) {
-                new MaterialAlertDialogBuilder(CategoryActivity.this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
-                        .setTitle("Chop Well")
-                        .setIcon(R.drawable.ic_app_icon)
-                        .setMessage("Do you want to Logout?")
-                        .setNegativeButton("NO", (dialog, which) -> dialog.dismiss())
-                        .setPositiveButton("YES", (dialog, which) -> {
-                            mAuth.signOut();
-                            Snackbar.make(findViewById(R.id.root), "You have signed out successfully", Snackbar.LENGTH_INDEFINITE)
-                                    .show();
-                            recreate();
-                        })
-                        .create()
-                        .show();
-            } else if (item.getTitle().equals(getString(R.string.sign_in))) {
-                startActivity(new Intent(CategoryActivity.this, StartActivity.class));
-            }
-        } else if (item.getItemId() == R.id.action_favorites) {
+        if (item.getItemId() == R.id.action_favorites) {
             if (mAuth.getUid() != null) {
                 startActivity(new Intent(CategoryActivity.this, FavoritesActivity.class));
             } else {

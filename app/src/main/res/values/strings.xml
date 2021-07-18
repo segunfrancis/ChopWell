@@ -30,4 +30,6 @@
     <string name="desc_translucent_cover">Translucent cover for background</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
 </resources>
